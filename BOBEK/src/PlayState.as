@@ -52,6 +52,15 @@ package
 			
 			Bob = new Player(100, 200, 136);
 			add(Bob);
+			
+			super.create();
+		}
+		
+		override public function update():void 
+		{
+			FlxU.collide(Bob, blockgrid);
+			
+			super.update();
 		}
 	}
 }

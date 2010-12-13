@@ -20,13 +20,13 @@ package
 		{
 			super(x, y);
 			//acceleration.x = 100;
-			acceleration.y = 00; //Set the gravity - 1200
+			acceleration.y = 1200; //Set the gravity - 1200
             //maxVelocity.x = 00; // 300
-            maxVelocity.y = 00; // 300
+            maxVelocity.y = 300; // 300
 			
 			_xVelocity = xVelocity;
 			velocity.x = 0;
-			velocity.y = 0;
+			//velocity.y = 0;
 			
 			
 			//Load graphic
@@ -39,14 +39,14 @@ package
 		
 		override public function update():void
 		{
-				
-			this.y = Math.min(this.y, FlxG.height - this.height);
+			//Prevent player gowing under display
+			//this.y = Math.min(this.y, FlxG.height - this.height);
 			
 			FlxG.log(this.y);
 			
 			if (this.y >= 384)
 			{
-				acceleration.y = 0;				
+				//acceleration.y = 0;				
 			}
 			
 			//Move left
