@@ -52,7 +52,7 @@ package
 			
 			Bob = new Player(100, 200, 136);
 			add(Bob);
-			
+			FlxG.follow(Bob);
 			super.create();
 		}
 		
