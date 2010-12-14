@@ -58,6 +58,7 @@ package
 		
 		override public function update():void 
 		{
+			//Set collisions
 			FlxU.collide(Bob, blockgrid);
 			
 			super.update();

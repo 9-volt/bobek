@@ -12,23 +12,17 @@ package
 		
 		private var _xVelocity:Number;
 		
-
 		
-		//protected ArrayList levelBlocks = new ArrayList();
-		//protected Player player = null;
-
 		public function Player(x:int, y:int, xVelocity:int = 120) 
 		{
 			super(x, y);
-			//acceleration.x = 100;
-			acceleration.y = 1200; //Set the gravity - 1200
-            //maxVelocity.x = 00; // 300
+			
+			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 300; // 300
 			
+			//set horizontal velocity
 			_xVelocity = xVelocity;
 			velocity.x = 0;
-			//velocity.y = 0;
-			
 			
 			//Load graphic
 			loadGraphic(BobSkin, true, true, 68, 96);
@@ -41,13 +35,6 @@ package
 		
 		override public function update():void
 		{
-			//Prevent player gowing under display
-			//this.y = Math.min(this.y, FlxG.height - this.height);
-			
-			if (this.y >= 384)
-			{
-				//acceleration.y = 0;				
-			}
 			
 			//Move left
 			if (FlxG.keys.LEFT || FlxG.keys.A)
@@ -64,17 +51,13 @@ package
 				velocity.x = _xVelocity;
 				_walk = true;
 			}
-
 			
 			//Jumping
 			if((_jump >= 0) && ((FlxG.keys.UP) || (FlxG.keys.W)))
             {
-				if(FlxG.elapsed > 0)
-					_jump += FlxG.elapsed;
-				else
-					_jump += 0.001;
+				_jump += FlxG.elapsed;
 					
-				FlxG.log(FlxG.elapsed);
+				//FlxG.log(FlxG.elapsed);
                 if(_jump > 0.25) _jump = -1; //You can't jump for more than 0.25 seconds
             }
             else _jump = -1;
@@ -86,6 +69,12 @@ package
                 else
                     velocity.y = -maxVelocity.y;
             }
+			
+			//increase velocity if we are falling and still press UP keys
+			if (((FlxG.keys.UP) || (FlxG.keys.W)) && _jump < 0 && _walk)
+			{
+				velocity.x *= 1.2;
+			}
 			
 			//Stop moving
 			if (FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") || FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D"))
