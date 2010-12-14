@@ -73,7 +73,8 @@ package
 			//increase velocity if we are falling and still press UP keys
 			if (((FlxG.keys.UP) || (FlxG.keys.W)) && _jump < 0 && _walk)
 			{
-				velocity.x *= 1.2;
+				if(velocity.y>0)
+					velocity.x += velocity.y * (velocity.x / _xVelocity);
 			}
 			
 			//Stop moving
@@ -95,6 +96,7 @@ package
 			else
 			{
 				velocity.x = 0;
+				//acceleration.x = 0;
 				play("stay");
 			}
 			
