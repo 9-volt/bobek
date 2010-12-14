@@ -7,7 +7,8 @@ package
 		[Embed(source = "../media/walk.png")]
 		private var BobSkin:Class;
 		
-		private var _jump:int;
+		private var _jump:Number;
+		private var _walk:Boolean = false;
 		
 		private var _xVelocity:Number;
 		
@@ -34,6 +35,7 @@ package
 			
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 10);
+			addAnimation("jump", [3, 4, 5], 10);
 			addAnimation("stay", [0]);
 		}
 		
@@ -41,8 +43,6 @@ package
 		{
 			//Prevent player gowing under display
 			//this.y = Math.min(this.y, FlxG.height - this.height);
-			
-			FlxG.log(this.y);
 			
 			if (this.y >= 384)
 			{
@@ -54,7 +54,7 @@ package
 			{
 				facing = LEFT;
 				velocity.x = -_xVelocity;
-				play("walk");
+				_walk = true;
 			}
 			
 			//Move right
@@ -62,13 +62,19 @@ package
 			{
 				facing = RIGHT;
 				velocity.x = _xVelocity;
-				play("walk");
+				_walk = true;
 			}
+
 			
 			//Jumping
 			if((_jump >= 0) && ((FlxG.keys.UP) || (FlxG.keys.W)))
             {
-                _jump += FlxG.elapsed;
+				if(FlxG.elapsed > 0)
+					_jump += FlxG.elapsed;
+				else
+					_jump += 0.001;
+					
+				FlxG.log(FlxG.elapsed);
                 if(_jump > 0.25) _jump = -1; //You can't jump for more than 0.25 seconds
             }
             else _jump = -1;
@@ -83,6 +89,21 @@ package
 			
 			//Stop moving
 			if (FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") || FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D"))
+			{
+				_walk = false;
+			}
+			
+			
+			//Display user state
+			if (velocity.y != 0)
+			{
+				play("jump");
+			}
+			else if (_walk)
+			{
+				play("walk");
+			}
+			else
 			{
 				velocity.x = 0;
 				play("stay");
