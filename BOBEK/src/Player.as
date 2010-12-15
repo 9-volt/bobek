@@ -18,14 +18,14 @@ package
 			super(x, y);
 			
 			acceleration.y = 800; //Set the gravity - 1200
-            maxVelocity.y = 300; // 300
+            maxVelocity.y = 350; // 300
 			
 			//set horizontal velocity
 			_xVelocity = xVelocity;
 			velocity.x = 0;
 			
 			//Load graphic
-			loadGraphic(BobSkin, true, true, 68, 96);
+			loadGraphic(BobSkin, true, true, 64, 94);
 			
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 10);
