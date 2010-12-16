@@ -23,7 +23,6 @@ package
 			
 			var grid_size:int = 16;
 			
-			_hills = new FlxSprite(100, 100, hillsImg);
 			
 			
 			//initialize main map
@@ -43,7 +42,7 @@ package
 			var scrollFactorX:Number = 0.3;
 			var tempSprite:FlxSprite;
 			
-			tempSprite = new FlxSprite(400, 20, cloud_img);
+			tempSprite = new FlxSprite(400, 50, cloud_img);
 			tempSprite.velocity.x = -5;
 			tempSprite.scrollFactor.x = scrollFactorX;
 			_clouds.add(tempSprite);
@@ -55,7 +54,7 @@ package
 			
 			
 			//we put hills in the middle so that a couple of clouds will be rendered amongst them
-			_hills = new FlxSprite(100, 100, hillsImg);
+			_hills = new FlxSprite(0, 360, hillsImg);
 			_hills.scrollFactor.x = 0.6;
 			_hills.scrollFactor.y = 0.7;
 			
@@ -71,19 +70,19 @@ package
 			tempSprite.facing = FlxSprite.LEFT;
 			_clouds.add(tempSprite);
 			
-			tempSprite = new FlxSprite(200, 22, cloud3_img);
+			tempSprite = new FlxSprite(200, 42, cloud3_img);
 			tempSprite.velocity.x = -8;
 			tempSprite.scrollFactor.x = scrollFactorX;
 			_clouds.add(tempSprite);
 			
-			tempSprite = new FlxSprite(600, 30, cloud3_img);
+			tempSprite = new FlxSprite(600, 70, cloud3_img);
 			tempSprite.velocity.x = -6;
 			tempSprite.scrollFactor.x = scrollFactorX;
 			tempSprite.facing = FlxSprite.LEFT;
 			_clouds.add(tempSprite);
 			
 			
-			tempSprite = new FlxSprite(1300, 5, cloud_img);
+			tempSprite = new FlxSprite(1300, 25, cloud_img);
 			tempSprite.velocity.x = -7;
 			tempSprite.scrollFactor.x = scrollFactorX;
 			_clouds.add(tempSprite);

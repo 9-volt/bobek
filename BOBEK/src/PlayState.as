@@ -18,7 +18,7 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 250, 136);
+			Bob = new Player(100, 450, 136);
 			map = new Map;
 			map.AddToState(this);
 			FlxU.setWorldBounds();
