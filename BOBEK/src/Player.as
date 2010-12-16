@@ -4,7 +4,7 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		[Embed(source = "../media/mini/walk_2.png")]
+		[Embed(source = "../media/mini/moving.png")]
 		private var BobSkin:Class;
 		
 		private var _jump:Number;
@@ -26,10 +26,16 @@ package
 			
 			//Load graphic
 			loadGraphic(BobSkin, true, true, 32, 47);
+			/*
+			 * 0 - staing in place
+			 * 1 - moving frame 1
+			 * 2 - moving frame 2
+			 * */
 			
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 10);
-			addAnimation("jump", [3, 4, 5], 10);
+			addAnimation("jump", [0, 3, 4, 5, 6, 7], 10);
+			addAnimation("fall", [8, 7], 10);
 			addAnimation("stay", [0]);
 		}
 		
@@ -85,7 +91,11 @@ package
 			
 			
 			//Display user state
-			if (velocity.y != 0)
+			if (velocity.y > 0)
+			{
+				play("fall");
+			}
+			else if (velocity.y != 0)
 			{
 				play("jump");
 			}
