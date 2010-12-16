@@ -8,6 +8,7 @@ package
 		[Embed(source = "../media/Level1Layer1.txt", mimeType="application/octet-stream")] private var layer1_string:Class;
 		
 		public var _map:FlxTilemap;
+		
 		//public var _foreground:FlxTilemap;
 		
 		 
@@ -34,11 +35,6 @@ package
 			_map.update();
 			//_background.update();
 			//_foreground.update();
-		}
-		
-		public function collide(spr:FlxSprite):void
-		{
-			FlxU.collide(spr, _map);
 		}
 		
 	}

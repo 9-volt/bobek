@@ -5,10 +5,10 @@ package
  
 	public class PlayState extends FlxState
 	{ 
-		private var Bob:Player;
-		
-		
+		private var Bob:Player;		
 		private var map:Map;
+		
+		private var hasFlashed:Boolean = false;
 		
 		public function PlayState()
 		{
@@ -21,18 +21,26 @@ package
 			Bob = new Player(100, 200, 136);
 			map = new Map;
 			map.AddToState(this);
-			
+			FlxU.setWorldBounds();
 			
 			add(Bob);
 			FlxG.follow(Bob);
+			FlxG.followBounds(0,0,map._map.width,map._map.height);
 			super.create();
 		}
 		
 		override public function update():void 
 		{
-			map.collide(Bob);
-			map.update();
+			FlxU.setWorldBounds(Bob.x - 400, Bob.y - 400, 800, 800);
+			
+			if (!hasFlashed) {
+				FlxG.flash.start();
+				hasFlashed = true;
+			}
+			
 			super.update();
+			map.update();
+			FlxU.collide(Bob, map._map);
 		}
 		
 	}

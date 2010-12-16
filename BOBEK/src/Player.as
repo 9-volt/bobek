@@ -4,7 +4,7 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		[Embed(source = "../media/walk.png")]
+		[Embed(source = "../media/mini/walk_2.png")]
 		private var BobSkin:Class;
 		
 		private var _jump:Number;
@@ -13,19 +13,19 @@ package
 		private var _xVelocity:Number;
 		
 		
-		public function Player(x:int, y:int, xVelocity:int = 120) 
+		public function Player(x:int, y:int, xVelocity:int = 70) 
 		{
 			super(x, y);
 			
 			acceleration.y = 800; //Set the gravity - 1200
-            maxVelocity.y = 350; // 300
+            maxVelocity.y = 250; // 300
 			
 			//set horizontal velocity
 			_xVelocity = xVelocity;
 			velocity.x = 0;
 			
 			//Load graphic
-			loadGraphic(BobSkin, true, true, 64, 94);
+			loadGraphic(BobSkin, true, true, 32, 47);
 			
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 10);
