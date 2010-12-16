@@ -1,5 +1,6 @@
 package  
 {
+	import flash.utils.Timer;
 	import org.flixel.*;
 	public class Map
 	{
@@ -17,6 +18,7 @@ package
 		public var _hills:FlxSprite;
 		public var _environment:FlxGroup;
 		public var _sun:FlxSprite;
+		public var _trap:Trap;
 		//public var _foreground:FlxTilemap;
 		
 		 
@@ -30,6 +32,9 @@ package
 			//initialize main map
 			_map = new FlxTilemap;
 			_map.loadMap(new layer1_string, blocks_img, grid_size, grid_size);
+			
+			
+			_trap = new Trap(784,400);
 			
 			//init _environment
 			InitEnv();
@@ -51,24 +56,6 @@ package
 			_environment.add(_sun);
 			
 			
-			
-			tempSprite = new FlxSprite(400, 80, cloud_img);
-			tempSprite.velocity.x = -5;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-			_environment.add(tempSprite);
-			
-			
-			
-			tempSprite = new FlxSprite(900, 55, cloud2_img);
-			tempSprite.velocity.x = -7;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-
-			_environment.add(tempSprite);
-			
-			
-			//we put hills in the middle so that a couple of clouds will be rendered amongst them
 			_hills = new FlxSprite(0, 360, hillsImg);
 			_hills.scrollFactor.x = 0.6;
 			_hills.scrollFactor.y = 0.7;
@@ -77,45 +64,46 @@ package
 			
 			
 			
-			
-			
-			tempSprite = new FlxSprite(1100, 75, cloud2_img);
-			tempSprite.velocity.x = -3;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-			tempSprite.facing = FlxSprite.LEFT;
-			_environment.add(tempSprite);
-			
-			tempSprite = new FlxSprite(200, 82, cloud3_img);
-			tempSprite.velocity.x = -8;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-			_environment.add(tempSprite);
-			
-			tempSprite = new FlxSprite(600, 100, cloud3_img);
-			tempSprite.velocity.x = -6;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-			tempSprite.facing = FlxSprite.LEFT;
-			_environment.add(tempSprite);
-			
-			
-			tempSprite = new FlxSprite(1300, 75, cloud_img);
-			tempSprite.velocity.x = -7;
-			tempSprite.scrollFactor.x = scrollFactorX;
-			tempSprite.scrollFactor.y = scrollFactorY;
-			_environment.add(tempSprite);
-			
-			
+			for (var i:int = 0; i < 10; i++) 
+			{
+				
+				var rndX:Number = FlxU.random() * 2000;
+				var rndY:Number = FlxU.random() * 120;
+				var rndFactor:Number = FlxU.random() / 5;
+				var rndSpeed:Number = FlxU.random() * 5;
+				var rndKind:Number = int(FlxU.random()*3); // so that it would generate 0,1 or 2
+				
+					switch (rndKind)
+					{
+						case 0:
+							tempSprite = new FlxSprite(rndX, rndY, cloud_img);
+							break;
+						case 1:
+							tempSprite = new FlxSprite(rndX, rndY, cloud2_img);
+							break;
+						case 2:
+							tempSprite = new FlxSprite(rndX, rndY, cloud3_img);
+							break;
+						default:
+							
+						break;
+					}
+				tempSprite.velocity.x = -5 - rndSpeed;
+				tempSprite.scrollFactor.x = scrollFactorX + rndFactor;
+				tempSprite.scrollFactor.y = scrollFactorY;
+				_environment.add(tempSprite);
+			}
 		}
 		public function AddToState(st:FlxState):void
 		{
 			st.add(_environment);
 			st.add(_map);
+			st.add(_trap);
 		}
 		public function update():void
 		{
 			_map.update();
+			_trap.update();
 			_environment.update();
 		}
 		
