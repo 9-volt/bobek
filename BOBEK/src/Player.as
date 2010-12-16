@@ -36,6 +36,7 @@ package
 			addAnimation("walk", [0, 1, 2], 15);
 			addAnimation("jump", [0, 3, 4, 5, 6, 7], 7, false);
 			addAnimation("fall", [8, 9, 10], 20);
+			addAnimation("fall_simple", [9]);
 			addAnimation("stay", [0]);
 		}
 		
@@ -95,7 +96,10 @@ package
 			//Display user state
 			if (velocity.y > 0)
 			{
-				play("fall");
+				if(((FlxG.keys.UP) || (FlxG.keys.W)))
+					play("fall");
+				else
+					play("fall_simple");
 			}
 			else if (velocity.y != 0)
 			{
