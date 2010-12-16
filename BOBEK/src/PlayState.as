@@ -13,12 +13,12 @@ package
 		public function PlayState()
 		{
 			super();
-			bgColor = 0xff783629;
+			bgColor = 0xff66b3ad;
 		}
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 200, 136);
+			Bob = new Player(100, 250, 136);
 			map = new Map;
 			map.AddToState(this);
 			FlxU.setWorldBounds();
