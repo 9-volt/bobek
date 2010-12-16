@@ -33,8 +33,8 @@ package
 			 * */
 			
 			//Create basic animations
-			addAnimation("walk", [0, 1, 2], 10);
-			addAnimation("jump", [0, 3, 4, 5, 6, 7], 10);
+			addAnimation("walk", [0, 1, 2], 15);
+			addAnimation("jump", [0, 3, 4, 5, 6, 7], 7, false);
 			addAnimation("fall", [8, 9, 10], 20);
 			addAnimation("stay", [0]);
 		}
@@ -77,7 +77,7 @@ package
             }
 			
 			//increase velocity if we are falling and still press UP keys
-			if (((FlxG.keys.UP) || (FlxG.keys.W)) && _jump < 0 && _walk)
+			if (((FlxG.keys.UP) || (FlxG.keys.W)) && _jump < 0)
 			{
 				if (velocity.y > 0)
 				{
