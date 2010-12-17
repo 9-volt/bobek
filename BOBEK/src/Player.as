@@ -20,18 +20,17 @@ package
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300
 			
+			//hack for putting player foots on ground
+			//TODO change this
+			offset.y = -2;
+			
 			//set horizontal velocity
 			_xVelocity = xVelocity;
 			velocity.x = 0;
 			
 			//Load graphic
 			loadGraphic(BobSkin, true, true, 32, 47);
-			/*
-			 * 0 - staing in place
-			 * 1 - moving frame 1
-			 * 2 - moving frame 2
-			 * */
-			
+
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 15);
 			addAnimation("jump", [0, 3, 4, 5, 6, 7], 7, false);
