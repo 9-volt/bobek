@@ -17,6 +17,10 @@ package
 			loadGraphic(trap_img);
 			
 		}
+		public function Break():void
+		{
+			
+		}
 		
 	}
 

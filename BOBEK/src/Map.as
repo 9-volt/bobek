@@ -1,5 +1,6 @@
 package  
 {
+	import adobe.utils.CustomActions;
 	import flash.utils.Timer;
 	import org.flixel.*;
 	public class Map
@@ -19,6 +20,7 @@ package
 		public var _environment:FlxGroup;
 		public var _sun:FlxSprite;
 		public var _trap:Trap;
+		public var _candies:FlxGroup;
 		//public var _foreground:FlxTilemap;
 		
 		 
@@ -38,9 +40,21 @@ package
 			
 			//init _environment
 			InitEnv();
+			InitCandies();
 			
 		
 		}
+		private function InitCandies():void
+		{
+			_candies = new FlxGroup();
+			
+			var tempCandy:Kanfeata = new Kanfeata(920, 240);
+			_candies.add(tempCandy);
+			
+			tempCandy = new Kanfeata(950, 260);
+			_candies.add(tempCandy);
+		}
+		
 		//initializes all the environment: clouds, hills.
 		
 		private function InitEnv():void 
@@ -99,10 +113,12 @@ package
 			st.add(_environment);
 			st.add(_map);
 			st.add(_trap);
+			st.add(_candies);
 		}
 		public function update():void
 		{
 			_map.update();
+			_candies.update();
 			_trap.update();
 			_environment.update();
 		}
