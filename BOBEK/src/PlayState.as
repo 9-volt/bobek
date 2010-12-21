@@ -20,7 +20,7 @@ package
 		override public function create():void
 		{
 			Bob = new Player(100, 450, 136);
-			OneEnemy = new Enemy(500, 400, 1);
+			OneEnemy = new Enemy(600, 400, 1);
 			map = new Map;
 			map.AddToState(this);
 			FlxU.setWorldBounds();
@@ -34,7 +34,7 @@ package
 		
 		override public function update():void 
 		{
-			FlxU.setWorldBounds(Bob.x - 400, Bob.y - 400, 800, 800);
+			FlxU.setWorldBounds(Bob.x - 1000, Bob.y - 1000, 2000, 2000);
 			
 			if (!hasFlashed) {
 				FlxG.flash.start();
