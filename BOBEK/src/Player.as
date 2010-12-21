@@ -9,6 +9,8 @@ package
 		
 		private var _jump:Number;
 		private var _walk:Boolean = false;
+		private var _shoot:Boolean = false;
+		private var _shooting:Boolean = false;
 		
 		private var _xVelocity:Number;
 		
@@ -37,6 +39,8 @@ package
 			addAnimation("fall", [8, 9, 10], 20);
 			addAnimation("fall_simple", [9]);
 			addAnimation("stay", [0]);
+			addAnimation("shoot", [ 11, 12, 13, 14, 14, 15], 30, false );
+			addAnimation("shoot_off", [16, 13, 12, 11, 0], 30, false );
 		}
 		
 		override public function update():void
@@ -92,6 +96,25 @@ package
 			}
 			
 			
+			//shooting processing
+			if (FlxG.keys.Z)
+			{
+				_shoot = true;
+				_shooting = true;
+			}
+			
+			if (FlxG.keys.justReleased("Z"))
+			{
+				_shoot = false;
+				_shooting = true;
+			}
+			
+			if ( !_shoot && frame == 0)
+			{
+				_shooting = false;
+			}
+			
+			
 			//Display user state
 			if (velocity.y > 0)
 			{
@@ -107,6 +130,16 @@ package
 			else if (_walk)
 			{
 				play("walk");
+			}
+			else if (_shooting)
+			{
+				if (_shoot)
+				{
+					play("shoot");
+				}
+				else {
+					play("shoot_off");
+				}
 			}
 			else
 			{
