@@ -23,7 +23,7 @@ package
 			OneEnemy = new Enemy(600, 400, 1);
 			map = new Map;
 			map.AddToState(this);
-			FlxU.setWorldBounds();
+			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
 			add(Bob);
 			add(OneEnemy);
@@ -34,7 +34,7 @@ package
 		
 		override public function update():void 
 		{
-			FlxU.setWorldBounds(Bob.x - 1000, Bob.y - 1000, 2000, 2000);
+			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
 			if (!hasFlashed) {
 				FlxG.flash.start();
@@ -45,6 +45,7 @@ package
 			map.update();
 			FlxU.collide(Bob, map._map);
 			FlxU.collide(OneEnemy, map._map);
+			map.collide();
 		}
 		
 	}

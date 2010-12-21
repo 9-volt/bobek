@@ -113,6 +113,7 @@ package
 			st.add(_environment);
 			st.add(_map);
 			st.add(_trap);
+			st.add(_trap.emitter);
 			st.add(_candies);
 		}
 		public function update():void
@@ -121,6 +122,10 @@ package
 			_candies.update();
 			_trap.update();
 			_environment.update();
+		}
+		public function collide():void
+		{
+			FlxU.collide(_trap.emitter, _map);
 		}
 		
 	}
