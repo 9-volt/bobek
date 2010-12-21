@@ -14,6 +14,61 @@ package
 		
 		private var _xVelocity:Number;
 		
+		private function buttonPressed( button:String ) : Boolean
+		{
+			switch(button)
+			{
+				case 'up':
+					if ( FlxG.keys.UP || FlxG.keys.W || FlxG.keys.X )
+						return true;
+					break;
+				case 'down':
+					if ( FlxG.keys.DOWN || FlxG.keys.S )
+						return true;
+					break;
+				case 'left':
+					if ( FlxG.keys.LEFT || FlxG.keys.A )
+						return true;
+					break;
+				case 'right':
+					if ( FlxG.keys.RIGHT || FlxG.keys.D)
+						return true;
+					break;
+				case 'shoot':
+					if (FlxG.keys.SPACE || FlxG.keys.Z)
+						return true;
+					break;
+			}
+			return false;
+		}
+		
+		private function buttonReleased( button:String ) : Boolean
+		{
+			switch(button)
+			{
+				case 'up':
+					if ( FlxG.keys.justReleased("UP") || FlxG.keys.justReleased("W") || FlxG.keys.justReleased("X"))
+						return true;
+					break;
+				case 'down':
+					if ( FlxG.keys.justReleased("DOWN") || FlxG.keys.justReleased("S") )
+						return true;
+					break;
+				case 'left':
+					if ( FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") )
+						return true;
+					break;
+				case 'right':
+					if ( FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D") )
+						return true;
+					break;
+				case 'shoot':
+					if ( FlxG.keys.justReleased("SPACE") || FlxG.keys.justReleased("Z") )
+						return true;
+					break;
+			}
+			return false;
+		}
 		
 		public function Player(x:int, y:int, xVelocity:int = 70) 
 		{
@@ -36,7 +91,7 @@ package
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 15);
 			addAnimation("jump", [0, 3, 4, 5, 6, 7], 7, false);
-			addAnimation("fall", [8, 9, 10], 20);
+			addAnimation("fall", [8, 9, 10], 30);
 			addAnimation("fall_simple", [9]);
 			addAnimation("stay", [0]);
 			addAnimation("shoot", [ 11, 12, 13, 14, 14, 15], 30, false );
@@ -47,15 +102,16 @@ package
 		{
 			
 			//Move left
-			if (FlxG.keys.LEFT || FlxG.keys.A)
+			if ( buttonPressed('left') )
 			{
 				facing = LEFT;
 				velocity.x = -_xVelocity;
 				_walk = true;
+				
 			}
 			
 			//Move right
-			if (FlxG.keys.RIGHT || FlxG.keys.D)
+			if ( buttonPressed('right') )
 			{
 				facing = RIGHT;
 				velocity.x = _xVelocity;
@@ -63,7 +119,7 @@ package
 			}
 			
 			//Jumping
-			if((_jump >= 0) && ((FlxG.keys.UP) || (FlxG.keys.W)))
+			if( (_jump >= 0) && buttonPressed('up') )
             {
 				_jump += FlxG.elapsed;
 					
@@ -81,7 +137,7 @@ package
             }
 			
 			//increase velocity if we are falling and still press UP keys
-			if (((FlxG.keys.UP) || (FlxG.keys.W)) && _jump < 0)
+			if ( buttonPressed('up') && _jump < 0)
 			{
 				if (velocity.y > 0)
 				{
@@ -90,20 +146,20 @@ package
 			}
 			
 			//Stop moving
-			if (FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") || FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D"))
+			if ( buttonReleased('left') || buttonReleased('right') )
 			{
 				_walk = false;
 			}
 			
 			
-			//shooting processing
-			if (FlxG.keys.Z)
+			//Shooting processing
+			if ( buttonPressed('shoot') )
 			{
 				_shoot = true;
 				_shooting = true;
 			}
 			
-			if (FlxG.keys.justReleased("Z"))
+			if ( buttonReleased('shoot') )
 			{
 				_shoot = false;
 				_shooting = true;
@@ -118,7 +174,7 @@ package
 			//Display user state
 			if (velocity.y > 0)
 			{
-				if(((FlxG.keys.UP) || (FlxG.keys.W)))
+				if( buttonPressed('up') )
 					play("fall");
 				else
 					play("fall_simple");
@@ -144,7 +200,6 @@ package
 			else
 			{
 				velocity.x = 0;
-				//acceleration.x = 0;
 				play("stay");
 			}
 			
