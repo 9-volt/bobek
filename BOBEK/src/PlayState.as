@@ -44,6 +44,11 @@ package
 			super.update();
 			map.update();
 			FlxU.collide(Bob, map._map);
+			FlxU.collide(Bob, map._trap);
+			FlxU.collide(Bob, map._trap2);
+			FlxU.collide(Bob, map._trap3);
+			FlxU.collide(Bob, map._trap4);
+			FlxU.collide(Bob, map._trap5);
 			FlxU.collide(OneEnemy, map._map);
 			map.collide();
 		}

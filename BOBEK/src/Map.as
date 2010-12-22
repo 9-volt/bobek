@@ -20,8 +20,13 @@ package
 		public var _environment:FlxGroup;
 		public var _sun:FlxSprite;
 		public var _trap:Trap;
+		public var _trap2:Trap;
+		public var _trap3:Trap;
+		public var _trap4:Trap;
+		public var _trap5:Trap;
 		public var _candies:FlxGroup;
 		//public var _foreground:FlxTilemap;
+		
 		
 		 
 		public function Map()
@@ -36,7 +41,11 @@ package
 			_map.loadMap(new layer1_string, blocks_img, grid_size, grid_size);
 			
 			
-			_trap = new Trap(784,400);
+			_trap = new Trap(784, 400);
+			_trap2 = new Trap(1500, 850);
+			_trap3 = new Trap(1200, 870);
+			_trap4 = new Trap(900, 850);
+			_trap5 = new Trap(700, 810);
 			
 			//init _environment
 			InitEnv();
@@ -112,8 +121,11 @@ package
 		{
 			st.add(_environment);
 			st.add(_map);
-			st.add(_trap);
-			st.add(_trap.emitter);
+			_trap.AddToState(st);
+			_trap2.AddToState(st);
+			_trap3.AddToState(st);
+			_trap4.AddToState(st);
+			_trap5.AddToState(st);
 			st.add(_candies);
 		}
 		public function update():void
@@ -121,11 +133,20 @@ package
 			_map.update();
 			_candies.update();
 			_trap.update();
+			_trap2.update();
+			_trap3.update();
+			_trap4.update();
+			_trap5.update();
 			_environment.update();
 		}
 		public function collide():void
 		{
 			FlxU.collide(_trap.emitter, _map);
+			FlxU.collide(_trap2.emitter, _map);
+			FlxU.collide(_trap3.emitter, _map);
+			FlxU.collide(_trap4.emitter, _map);
+			FlxU.collide(_trap5.emitter, _map);
+			
 		}
 		
 	}

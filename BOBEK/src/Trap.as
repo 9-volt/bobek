@@ -6,9 +6,12 @@ package
 	public class Trap extends FlxSprite
 	{
 		[Embed(source = "../media/trap.png")] private var trap_img:Class;
+		[Embed(source = "../media/trap_part.png")] private var trap_part_img:Class;
 		
 		public var emitter:FlxEmitter;
 		public var broken:Boolean;
+		public var broke:Boolean;
+		private var counter:Number;
 		
 		public function Trap(x:Number, y:Number) 
 		{
@@ -19,38 +22,65 @@ package
 			
 			loadGraphic(trap_img);
 			
+			fixed = true;
 			
 			broken = false;
+			broke = false;
+			counter = 0;
+			
 			
 			emitter = new FlxEmitter(); //x and y of the emitter
-			emitter.width = width - 10;
-			emitter.x = x - 3;
+			emitter.width = width - 40;
+			emitter.x = x + 17;
 			emitter.y = y - 44;
-			emitter.velocity.y = 0;
-			emitter.gravity = 800;
+			emitter.setXSpeed(0, 10);
+			emitter.setYSpeed(0, 10);
+			emitter.setRotation(0, 10);
+			emitter.gravity = 80;
 			
-			var particles:int = 10;
-			 
-			for(var i:int = 0; i < particles; i++)
-			{
-				var particle:FlxSprite = new FlxSprite();
-				particle.createGraphic(10, 10, 0xffffffff);
-				emitter.add(particle);
-			}
-			emitter.start(false);
+			emitter.createSprites(trap_part_img, 50, 16, true, 0.8);
+			//
+			//var particles:int = 10;			 
+			//for(var i:int = 0; i < particles; i++)
+			//{
+				//var particle:FlxSprite = new FlxSprite();
+				//particle.
+				//emitter.add(particle);
+			//}
+			
 		}
 		override public function hitTop(Contact:FlxObject, Velocity:Number):void
 		{
 			super.hitTop(Contact, Velocity);
+			if (!broken)
+			{
+				broken = true;
+				FlxG.quake.start(0.01);
+			}
 		}
 		public function Break():void
 		{
-			
+			emitter.start(true, 2000);
+			broken = true;
+			solid = false;
+			visible = false;
 		}
 		override public function update():void 
 		{
-			super.update();
+			//if(!broken)
+				super.update();
+			if (broken && visible)
+				counter += FlxG.elapsed;
+			if (counter >= 0.7 && !broke)
+			{
+				Break();
+				broke = true;
+			}
 			emitter.update();
+		}
+		public function AddToState(st:FlxState):void {
+			st.add(this);
+			st.add(emitter);
 		}
 	}
 
