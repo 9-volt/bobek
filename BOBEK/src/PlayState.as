@@ -9,7 +9,6 @@ package
 		private var OneEnemy:Enemy;		
 		private var map:Map;
 		
-		private var hasFlashed:Boolean = false;
 		
 		public function PlayState()
 		{
@@ -19,7 +18,7 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 450, 136);
+			Bob = new Player(100, 400, 136);
 			OneEnemy = new Enemy(600, 400, 1);
 			map = new Map;
 			map.AddToState(this);
@@ -36,17 +35,19 @@ package
 		{
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
-			if (!hasFlashed) {
-				FlxG.flash.start();
-				hasFlashed = true;
-			}
 			
+			if (FlxG.keys.justPressed("R")) {
+				FlxG.fade.start(0xffffffff, 0.2, restart);
+			}
 			super.update(); 
 			map.update();
 			FlxU.collide(Bob, map._map);
 			FlxU.collide(Bob, map._traps);
 			FlxU.collide(OneEnemy, map._map);
 			map.collide();
+		}
+		public function restart():void {
+			FlxG.state = new PlayState();
 		}
 		
 	}
