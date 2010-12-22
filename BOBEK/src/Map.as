@@ -18,15 +18,9 @@ package
 		public var _map:FlxTilemap;
 		public var _hills:FlxSprite;
 		public var _environment:FlxGroup;
+		public var _traps:FlxGroup;
 		public var _sun:FlxSprite;
-		public var _trap:Trap;
-		public var _trap2:Trap;
-		public var _trap3:Trap;
-		public var _trap4:Trap;
-		public var _trap5:Trap;
 		public var _candies:FlxGroup;
-		//public var _foreground:FlxTilemap;
-		
 		
 		 
 		public function Map()
@@ -41,17 +35,50 @@ package
 			_map.loadMap(new layer1_string, blocks_img, grid_size, grid_size);
 			
 			
-			_trap = new Trap(784, 400);
-			_trap2 = new Trap(1500, 850);
-			_trap3 = new Trap(1200, 870);
-			_trap4 = new Trap(900, 850);
-			_trap5 = new Trap(700, 810);
-			
 			//init _environment
 			InitEnv();
 			InitCandies();
+			InitTraps();
 			
 		
+		}
+		private function InitTraps():void {
+			_traps = new FlxGroup();
+			
+			var _trap : Trap;
+			_trap = new Trap(784, 400);
+			_traps.add(_trap);
+			
+			_trap = new Trap(1500, 850);
+			_traps.add(_trap);
+			
+			_trap = new Trap(1200, 870);
+			_traps.add(_trap);
+			
+			_trap = new Trap(900, 850);
+			_traps.add(_trap);
+			
+			_trap = new Trap(700, 810);
+			_traps.add(_trap);		
+			
+			_trap = new Trap(1300, 340);
+			_traps.add(_trap);			
+			
+			_trap = new Trap(1500, 290);
+			_traps.add(_trap);			
+			
+			_trap = new Trap(1700, 260);
+			_traps.add(_trap);			
+			
+			_trap = new Trap(1748, 260);
+			_traps.add(_trap);			
+			
+			_trap = new Trap(1796, 260);
+			_traps.add(_trap);			
+			
+			_trap = new Trap(1844, 260);
+			_traps.add(_trap);			
+			
 		}
 		private function InitCandies():void
 		{
@@ -121,31 +148,35 @@ package
 		{
 			st.add(_environment);
 			st.add(_map);
-			_trap.AddToState(st);
-			_trap2.AddToState(st);
-			_trap3.AddToState(st);
-			_trap4.AddToState(st);
-			_trap5.AddToState(st);
+			for (var i:int = 0; i < _traps.members.length; i++) 
+			{
+				var temp:Trap = _traps.members[i] as Trap;
+				temp.AddToState(st);
+				
+			}
 			st.add(_candies);
 		}
 		public function update():void
 		{
 			_map.update();
 			_candies.update();
-			_trap.update();
-			_trap2.update();
-			_trap3.update();
-			_trap4.update();
-			_trap5.update();
+			for (var i:int = 0; i < _traps.members.length; i++) 
+			{
+				var temp:Trap = _traps.members[i] as Trap;
+				temp.update();
+				
+			}
 			_environment.update();
 		}
 		public function collide():void
 		{
-			FlxU.collide(_trap.emitter, _map);
-			FlxU.collide(_trap2.emitter, _map);
-			FlxU.collide(_trap3.emitter, _map);
-			FlxU.collide(_trap4.emitter, _map);
-			FlxU.collide(_trap5.emitter, _map);
+			
+			for (var i:int = 0; i < _traps.members.length; i++) 
+			{
+				var temp:Trap = _traps.members[i] as Trap;
+				FlxU.collide(temp.emitter, _map);
+				FlxU.collide(temp.shakeEmitter, _map);
+			}
 			
 		}
 		

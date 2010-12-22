@@ -5,19 +5,27 @@ package
 	
 	public class Trap extends FlxSprite
 	{
-		[Embed(source = "../media/trap.png")] private var trap_img:Class;
+		[Embed(source = "../media/mini/trap.png")] private var trap_img:Class;
 		[Embed(source = "../media/trap_part.png")] private var trap_part_img:Class;
+		[Embed(source = "../media/mini/trap_part.png")] private var trap_shake_part_img:Class;
 		
 		public var emitter:FlxEmitter;
-		public var broken:Boolean;
-		public var broke:Boolean;
+		public var shakeEmitter:FlxEmitter;
+		public var broken:Boolean; // tells us that the player has been on the top
+		public var broke:Boolean;  // says the trap is completely broken
 		private var counter:Number;
+		
+		private var time:Number = 1.2;
+		private var fadeoutTime:Number = 1.7;
+		private var particleFadeoutTime:Number = 4;
+		
 		
 		public function Trap(x:Number, y:Number) 
 		{
 			//the editor coordinates have to be changed:
 			//trap.x = trap_map.x - 8
 			//trap.y = trap_map.y - 64
+			
 			super(x - 8, y - 64);
 			
 			loadGraphic(trap_img);
@@ -34,19 +42,23 @@ package
 			emitter.x = x + 17;
 			emitter.y = y - 44;
 			emitter.setXSpeed(0, 10);
-			emitter.setYSpeed(0, 10);
-			emitter.setRotation(0, 10);
-			emitter.gravity = 80;
+			emitter.setYSpeed(0, 30);
+			emitter.setRotation(0, 80);
+			emitter.gravity = 40;
 			
-			emitter.createSprites(trap_part_img, 50, 16, true, 0.8);
-			//
-			//var particles:int = 10;			 
-			//for(var i:int = 0; i < particles; i++)
-			//{
-				//var particle:FlxSprite = new FlxSprite();
-				//particle.
-				//emitter.add(particle);
-			//}
+			emitter.createSprites(trap_part_img, 16, 32, true, 0.8);
+			
+			
+			shakeEmitter = new FlxEmitter(); //x and y of the shakeEmitter
+			shakeEmitter.width = width - 20;
+			shakeEmitter.x = x + 7;
+			shakeEmitter.y = y - 20;
+			shakeEmitter.setXSpeed(0, 10);
+			shakeEmitter.setYSpeed(0, 30);
+			shakeEmitter.setRotation(0, 80);
+			shakeEmitter.gravity = 20;
+			
+			shakeEmitter.createSprites(trap_shake_part_img, 28, 32, true, 0.8);
 			
 		}
 		override public function hitTop(Contact:FlxObject, Velocity:Number):void
@@ -55,32 +67,45 @@ package
 			if (!broken)
 			{
 				broken = true;
-				FlxG.quake.start(0.01);
+				shakeEmitter.start(false);
 			}
 		}
 		public function Break():void
 		{
-			emitter.start(true, 2000);
-			broken = true;
+			emitter.start(true, particleFadeoutTime);
+			shakeEmitter.stop();
 			solid = false;
-			visible = false;
 		}
 		override public function update():void 
 		{
-			//if(!broken)
+			if(!broken)
 				super.update();
 			if (broken && visible)
-				counter += FlxG.elapsed;
-			if (counter >= 0.7 && !broke)
 			{
-				Break();
-				broke = true;
+				counter += FlxG.elapsed;
+			}
+			if (counter >= time)
+			{
+				if (!broke) {
+					Break();
+					broke = true;
+				}
+				else if(fadeoutTime > counter){
+					alpha = 1 - (counter / fadeoutTime)
+				}
+				else 
+				{
+					visible = false;
+				}
+				
 			}
 			emitter.update();
+			shakeEmitter.update();
 		}
 		public function AddToState(st:FlxState):void {
 			st.add(this);
 			st.add(emitter);
+			st.add(shakeEmitter);
 		}
 	}
 
