@@ -58,7 +58,7 @@ package
 			shakeEmitter.setRotation(0, 80);
 			shakeEmitter.gravity = 20;
 			
-			shakeEmitter.createSprites(trap_shake_part_img, 28, 32, true, 0.8);
+			shakeEmitter.createSprites(trap_shake_part_img, 28, 32);
 			
 		}
 		override public function hitTop(Contact:FlxObject, Velocity:Number):void

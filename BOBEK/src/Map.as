@@ -150,32 +150,41 @@ package
 			st.add(_map);
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
-				var temp:Trap = _traps.members[i] as Trap;
-				temp.AddToState(st);
+				var temptrap:Trap = _traps.members[i] as Trap;
+				temptrap.AddToState(st);
 				
 			}
-			st.add(_candies);
+			for (var j:int = 0; j < _candies.members.length; j++) 
+			{
+				var tempcandy:Kanfeata = _candies.members[j] as Kanfeata;
+				tempcandy.AddToState(st);
+			}
 		}
 		public function update():void
 		{
 			_map.update();
-			_candies.update();
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
-				var temp:Trap = _traps.members[i] as Trap;
-				temp.update();
-				
+				var temptrap:Trap = _traps.members[i] as Trap;
+				if(temptrap.visible)
+					temptrap.update();
+			}
+			
+			for (var j:int = 0; j < _candies.members.length; j++) 
+			{
+				var tempcandy:Kanfeata = _candies.members[j] as Kanfeata;
+				if(tempcandy.visible)
+					tempcandy.update();
 			}
 			_environment.update();
 		}
 		public function collide():void
 		{
-			
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
-				var temp:Trap = _traps.members[i] as Trap;
-				FlxU.collide(temp.emitter, _map);
-				FlxU.collide(temp.shakeEmitter, _map);
+				var temptrap:Trap = _traps.members[i] as Trap;
+				FlxU.collide(temptrap.emitter, _map);
+				FlxU.collide(temptrap.shakeEmitter, _map);
 			}
 			
 		}

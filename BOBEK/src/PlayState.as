@@ -43,6 +43,7 @@ package
 			map.update();
 			FlxU.collide(Bob, map._map);
 			FlxU.collide(Bob, map._traps);
+			FlxU.collide(Bob, map._candies);
 			FlxU.collide(OneEnemy, map._map);
 			map.collide();
 		}
