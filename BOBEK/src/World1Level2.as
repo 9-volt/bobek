@@ -3,14 +3,14 @@ package
 	import org.flashdevelop.utils.TraceLevel;
 	import org.flixel.*;
  
-	public class PlayState extends FlxState
+	public class World1Level2 extends FlxState
 	{ 
 		private var Bob:Player;		
 		private var OneEnemy:Enemy;		
-		private var map:Map;
+		private var map:World1Level2Map;
 		
 		
-		public function PlayState()
+		public function World1Level2()
 		{
 			super();
 			bgColor = 0xff66b3ad;
@@ -18,9 +18,9 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 400, 136);
-			OneEnemy = new Enemy(600, 400, 1);
-			map = new Map;
+			Bob = new Player(50, 400, 136);
+			OneEnemy = new Enemy(700, 400, 1);
+			map = new World1Level2Map;
 			map.AddToState(this);
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
@@ -39,9 +39,6 @@ package
 			if (FlxG.keys.justPressed("R")) {
 				FlxG.fade.start(0xffffffff, 0.2, restart);
 			}
-			if (FlxG.keys.justPressed("N")) {
-				FlxG.fade.start(0xffffffff, 0.2, NextLevel);
-			}
 			super.update(); 
 			map.update();
 			CheckPosition();
@@ -55,14 +52,9 @@ package
 			if ((Bob.x + Bob.width < 0) || (Bob.y < 0) || (Bob.y > map._map.height)) {
 				FlxG.fade.start(0xffffffff, 0.2, restart);
 			}
-			if (Bob.x > map._map.width)
-				FlxG.state = new World1Level2();
 		}
 		public function restart():void {
-			FlxG.state = new PlayState();
-		}
-		public function NextLevel():void {
-			FlxG.state = new World1Level2;
+			FlxG.state = new World1Level2();
 		}
 		
 	}

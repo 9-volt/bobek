@@ -7,6 +7,7 @@ package
 	{
 		[Embed(source = "../media/kanfeata.png")] private var image:Class;		
 		[Embed(source = "../media/star_sparkle.png")] private var sparkle_img:Class;
+		[Embed(source="../media/sounds/candy_pick.mp3")] private var SoundEffect:Class
 		
 		public var got: Boolean = false;	
 		public var over:Boolean = false;
@@ -84,6 +85,8 @@ package
 			got = true;
 			solid = false; //so that the player won't hit it;	
 			emitter.start(true, 2);
+			FlxG.play(SoundEffect);
+
 		}
 		public function AddToState(st:FlxState):void {
 			st.add(emitter);

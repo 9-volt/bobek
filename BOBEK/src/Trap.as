@@ -8,6 +8,7 @@ package
 		[Embed(source = "../media/mini/trap.png")] private var trap_img:Class;
 		[Embed(source = "../media/trap_part.png")] private var trap_part_img:Class;
 		[Embed(source = "../media/mini/trap_part.png")] private var trap_shake_part_img:Class;
+		[Embed(source="../media/sounds/leaves.mp3")] private var SoundEffect:Class
 		
 		public var emitter:FlxEmitter;
 		public var shakeEmitter:FlxEmitter;
@@ -73,6 +74,7 @@ package
 		public function Break():void
 		{
 			emitter.start(true, particleFadeoutTime);
+			FlxG.play(SoundEffect);
 			shakeEmitter.stop();
 			solid = false;
 		}
