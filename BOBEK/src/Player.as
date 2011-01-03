@@ -12,64 +12,13 @@ package
 		private var _shoot:Boolean = false;
 		private var _shooting:Boolean = false;
 		
+		private var _frameWidth:uint = 32;
+		private var _frameHeight:uint= 47;
+		private var _collideWidth:uint = 8;
+		private var _collideHeight:uint = 45;
+		
 		private var _xVelocity:Number;
-		
-		private function buttonPressed( button:String ) : Boolean
-		{
-			switch(button)
-			{
-				case 'up':
-					if ( FlxG.keys.UP || FlxG.keys.W || FlxG.keys.X )
-						return true;
-					break;
-				case 'down':
-					if ( FlxG.keys.DOWN || FlxG.keys.S )
-						return true;
-					break;
-				case 'left':
-					if ( FlxG.keys.LEFT || FlxG.keys.A )
-						return true;
-					break;
-				case 'right':
-					if ( FlxG.keys.RIGHT || FlxG.keys.D)
-						return true;
-					break;
-				case 'shoot':
-					if (FlxG.keys.SPACE || FlxG.keys.Z)
-						return true;
-					break;
-			}
-			return false;
-		}
-		
-		private function buttonReleased( button:String ) : Boolean
-		{
-			switch(button)
-			{
-				case 'up':
-					if ( FlxG.keys.justReleased("UP") || FlxG.keys.justReleased("W") || FlxG.keys.justReleased("X"))
-						return true;
-					break;
-				case 'down':
-					if ( FlxG.keys.justReleased("DOWN") || FlxG.keys.justReleased("S") )
-						return true;
-					break;
-				case 'left':
-					if ( FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") )
-						return true;
-					break;
-				case 'right':
-					if ( FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D") )
-						return true;
-					break;
-				case 'shoot':
-					if ( FlxG.keys.justReleased("SPACE") || FlxG.keys.justReleased("Z") )
-						return true;
-					break;
-			}
-			return false;
-		}
-		
+
 		public function Player(x:int, y:int, xVelocity:int = 70) 
 		{
 			super(x, y);
@@ -77,16 +26,18 @@ package
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300
 			
-			//hack for putting player foots on ground
-			//TODO change this
-			offset.y = -2;
+			//Load graphic
+			loadGraphic(BobSkin, true, true, _frameWidth, _frameHeight);
+			
+			// bounding box tweaks
+			width = _collideWidth;
+			height = _collideHeight;
+			offset.x = 12;
+			offset.y = 0;
 			
 			//set horizontal velocity
 			_xVelocity = xVelocity;
 			velocity.x = 0;
-			
-			//Load graphic
-			loadGraphic(BobSkin, true, true, 32, 47);
 
 			//Create basic animations
 			addAnimation("walk", [0, 1, 2], 15);
@@ -210,6 +161,62 @@ package
             _jump = 0;
             super.hitBottom(Contact, Velocity);
         }
+		
+				private function buttonPressed( button:String ) : Boolean
+		{
+			switch(button)
+			{
+				case 'up':
+					if ( FlxG.keys.UP || FlxG.keys.W || FlxG.keys.X )
+						return true;
+					break;
+				case 'down':
+					if ( FlxG.keys.DOWN || FlxG.keys.S )
+						return true;
+					break;
+				case 'left':
+					if ( FlxG.keys.LEFT || FlxG.keys.A )
+						return true;
+					break;
+				case 'right':
+					if ( FlxG.keys.RIGHT || FlxG.keys.D)
+						return true;
+					break;
+				case 'shoot':
+					if (FlxG.keys.SPACE || FlxG.keys.Z)
+						return true;
+					break;
+			}
+			return false;
+		}
+		
+		private function buttonReleased( button:String ) : Boolean
+		{
+			switch(button)
+			{
+				case 'up':
+					if ( FlxG.keys.justReleased("UP") || FlxG.keys.justReleased("W") || FlxG.keys.justReleased("X"))
+						return true;
+					break;
+				case 'down':
+					if ( FlxG.keys.justReleased("DOWN") || FlxG.keys.justReleased("S") )
+						return true;
+					break;
+				case 'left':
+					if ( FlxG.keys.justReleased("LEFT") || FlxG.keys.justReleased("A") )
+						return true;
+					break;
+				case 'right':
+					if ( FlxG.keys.justReleased("RIGHT") || FlxG.keys.justReleased("D") )
+						return true;
+					break;
+				case 'shoot':
+					if ( FlxG.keys.justReleased("SPACE") || FlxG.keys.justReleased("Z") )
+						return true;
+					break;
+			}
+			return false;
+		}
 		
 	}
 
