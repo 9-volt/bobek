@@ -85,6 +85,11 @@ package
 			if (broken && visible)
 			{
 				counter += FlxG.elapsed;
+				if (int(counter * 10) % 2 == 0)
+				{
+					x += 1;
+				}
+				else x -= 1;
 			}
 			if (counter >= time)
 			{

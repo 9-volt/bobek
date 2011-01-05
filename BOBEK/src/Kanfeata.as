@@ -23,7 +23,6 @@ package
 			addAnimation("spin", [0, 1, 2, 3], 3, true);
 			play("spin");
 			
-			
 			emitter = new FlxEmitter(); //x and y of the emitter
 			emitter.x = x + width / 2;
 			emitter.y = y + height / 2;
