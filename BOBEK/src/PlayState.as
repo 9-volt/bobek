@@ -5,7 +5,7 @@ package
  
 	public class PlayState extends FlxState
 	{ 
-		private var Bob:Player;		
+		public var Bob:Player;		
 		private var OneEnemy:Enemy;		
 		private var map:Map;
 		

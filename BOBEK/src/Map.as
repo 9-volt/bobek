@@ -6,9 +6,8 @@ package
 	public class Map
 	{
 		
-		[Embed(source = "../media/tiles2.png")] private var blocks_img:Class;
+		[Embed(source = "../media/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
-		[Embed(source = "../media/levels/world1level1fon.txt", mimeType = "application/octet-stream")] private var layer2_string:Class;
 		[Embed(source = "../media/mini/cloud.png")] private var cloud_img:Class;
 		[Embed(source = "../media/mini/cloud2.png")] private var cloud2_img:Class;
 		[Embed(source = "../media/mini/cloud3.png")] private var cloud3_img:Class;
@@ -18,14 +17,13 @@ package
 		
 		
 		public var _map:FlxTilemap;
-		public var _map2:FlxTilemap;
 		public var _hills:FlxBackdrop;
-		public var _hills2:FlxBackdrop;
 		public var _environment:FlxGroup;
 		public var _traps:FlxGroup;
 		public var _sun:FlxSprite;
 		public var _candies:FlxGroup;
 		public var _testmsg:Message;
+		public var _testFan:Fan;
 		
 		 
 		public function Map()
@@ -38,12 +36,6 @@ package
 			//initialize main map
 			_map = new FlxTilemap;
 			_map.loadMap(new layer1_string, blocks_img, grid_size, grid_size);
-			
-			
-			//initialize main map
-			_map2 = new FlxTilemap;
-			_map2.loadMap(new layer2_string, blocks_img, grid_size, grid_size);
-			_map2.scrollFactor.x = _map2.scrollFactor.y = 0.5;
 			
 			
 			
@@ -66,6 +58,7 @@ package
 			_trap = new Trap(600, 670);
 			_traps.add(_trap);
 			
+			_testFan = new Fan(300, 700);
 		}
 		private function InitCandies():void
 		{
@@ -94,12 +87,7 @@ package
 			
 			
 			_hills = new FlxBackdrop(hillsImg, 0.6, 0.7, true, false);
-			//_hills2 = new FlxBackdrop(hills2Img, 0.8, 0.9, true, true);
-			//
 			_environment.add(_hills);
-			//_environment.add(_hills2);
-			//
-			//
 			
 			//for (var i:int = 0; i < 10; i++) 
 			//{
@@ -134,7 +122,7 @@ package
 		public function AddToState(st:FlxState):void
 		{
 			st.add(_environment);
-			st.add(_map2);
+			_testFan.AddToState(st, "forward");
 			st.add(_map);
 			st.add(_testmsg);
 			for (var i:int = 0; i < _traps.members.length; i++) 
