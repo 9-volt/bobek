@@ -18,6 +18,7 @@ package
 		private var _collideHeight:uint = 45;
 		
 		private var _xVelocity:Number;
+		private var _gameState:FlxState;
 
 		public function Player(x:int, y:int, xVelocity:int = 70) 
 		{
@@ -108,6 +109,10 @@ package
 			{
 				_shoot = true;
 				_shooting = true;
+				if ( frame == 15 )
+				{
+					_gameState.add( new Bullet(x, y, 1) );
+				}
 			}
 			
 			if ( buttonReleased('shoot') )
@@ -155,6 +160,11 @@ package
 			}
 			
 			super.update();
+		}
+		
+		public function shareHandler(st:FlxState):void
+		{
+			_gameState = st;
 		}
 		
 		override public function hitBottom(Contact:FlxObject, Velocity:Number):void {

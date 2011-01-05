@@ -25,6 +25,7 @@ package
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
 			add(Bob);
+			Bob.shareHandler(this);
 			add(OneEnemy);
 			FlxG.follow(Bob);
 			FlxG.followBounds(0, 0, map._map.width, map._map.height);
