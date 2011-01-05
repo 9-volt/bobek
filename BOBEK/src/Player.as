@@ -10,6 +10,7 @@ package
 		private var _jump:Number;
 		private var _walk:Boolean = false;
 		private var _shoot:Boolean = false;
+		private var _shoted:Boolean = false;
 		private var _shooting:Boolean = false;
 		
 		private var _frameWidth:uint = 32;
@@ -46,8 +47,8 @@ package
 			addAnimation("fall", [8, 9, 10], 30);
 			addAnimation("fall_simple", [9]);
 			addAnimation("stay", [0]);
-			addAnimation("shoot", [ 11, 12, 13, 14, 14, 15], 30, false );
-			addAnimation("shoot_off", [16, 13, 12, 11, 0], 30, false );
+			addAnimation("shoot", [ 11, 12, 13, 14, 14, 15], 40, false );
+			addAnimation("shoot_off", [16, 13, 12, 11, 0], 40, false );
 		}
 		
 		override public function update():void
@@ -103,32 +104,37 @@ package
 				_walk = false;
 			}
 			
-			
-			//Shooting processing
+			//Start shooting processing
 			if ( buttonPressed('shoot') )
 			{
-				_shoot = true;
 				_shooting = true;
-				if ( frame == 15 )
-				{
-					_gameState.add( new Bullet(x, y, 1) );
-				}
 			}
 			
-			if ( buttonReleased('shoot') )
+			if ( _shooting && !_shoted && frame == 15 )
 			{
-				_shoot = false;
-				_shooting = true;
+				_gameState.add( new Bullet(x, y, 1) );
+				_shoted = true;
 			}
 			
-			if ( !_shoot && frame == 0)
+			if ( _shooting && _shoted && frame == 0)
 			{
 				_shooting = false;
+				_shoted = false;
 			}
 			
 			
 			//Display user state
-			if (velocity.y > 0)
+			if (_shooting)
+			{
+				if (!_shoted)
+				{
+					play("shoot");
+				}
+				else {
+					play("shoot_off");
+				}
+			}
+			else if (velocity.y > 0)
 			{
 				if( buttonPressed('up') )
 					play("fall");
@@ -142,16 +148,6 @@ package
 			else if (_walk)
 			{
 				play("walk");
-			}
-			else if (_shooting)
-			{
-				if (_shoot)
-				{
-					play("shoot");
-				}
-				else {
-					play("shoot_off");
-				}
 			}
 			else
 			{
