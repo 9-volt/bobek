@@ -9,15 +9,36 @@ package
 		[Embed(source = "../media/mini/bullet_2.png")]
 		private var Bullet_2:Class;//35x24
 		
-		private var visibilityOffset:Number = 20;
 		private var _directionLeftRight:int = 1;
 		private var _bulletType:int = 1;
 		
-		//override public var maxVelocity:FlxPoint;
-		
-		public function Bullet( _type:int = 1 ) 
+		public function Bullet( _x:Number, _y:Number, directionLeftRight:int = 1, _type:int = 1, _speed:int = 100 ) 
 		{
-			super( 0, 0 );
+			_directionLeftRight = directionLeftRight;
+			_bulletType = _type;
+			
+			var __x:int;
+			
+			if ( _directionLeftRight > 0 )
+			{
+				__x = _x +20;
+			}
+			else
+			{
+				__x = _x - 30;
+			}
+			super( __x, _y + 28 );
+			
+			if ( _directionLeftRight > 0 )
+			{
+				facing = RIGHT;
+			}
+			else
+			{
+				facing = LEFT;
+			}
+			
+			velocity.x = _speed * _directionLeftRight;
 			
 			acceleration.x = 0;
 			acceleration.y = 0;
@@ -29,10 +50,14 @@ package
 			{
 				case 2:
 					loadGraphic(Bullet_2, true, true, 35, 12);
+					width = 35;
+					height = 12;
 					break;
 				case 1:
 				default:
 					loadGraphic(Bullet_1, true, true, 18, 6);
+					width = 18;
+					height = 6;
 					break;
 			}
 			
@@ -42,18 +67,6 @@ package
 		
 		override public function update():void
 		{
-			
-			if ( _directionLeftRight > 0 )
-			{
-				facing = RIGHT;
-			}
-			else
-			{
-				facing = LEFT;
-			}
-			
-			//FlxG.log(velocity.x);
-			
 			play("fly");
 			
 			if ( !onScreen() )
@@ -63,56 +76,6 @@ package
 			
 			super.update();
 		}
-		
-		public function setType( _x:Number, _y:Number, directionLeftRight:int = 1, _type:int = 1 ):void
-		{
-			_directionLeftRight = directionLeftRight;
-			_bulletType = _type;
-			
-			y = _y + 28;
-			
-			if ( _directionLeftRight > 0 )
-			{
-				x = _x +20;
-			}
-			else
-			{
-				x = _x - 30;
-			}
-			
-			//same shit as reset
-			exists = true;
-			dead = false;
-			//reset( x, y );
-			
-			velocity.x = 100 * _directionLeftRight;
-			
-		}
-		
-		
-		//public function reset2( _x:Number, _y:Number ):void
-		//{
-			//var __x:int;
-			//
-			//
-			//super.reset( __x, _y + 28 );
-			//
-			//velocity.x = 100 * _directionLeftRight;
-			//maxVelocity.x = 100;
-			//velocity.y = 0;
-			//
-			//acceleration.x = 0;
-			//acceleration.y = 0;
-			//
-			//play("fly");
-		//}
-		
-		//override public function kill():void
-		//{
-			//exists = false;
-			//dead = true;
-			//velocity.x = 0;
-		//}
 		
 	}
 

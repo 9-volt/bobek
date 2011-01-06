@@ -184,7 +184,8 @@ package
 				directionLeftRight = -1;
 			else
 				directionLeftRight = 1;
-			_bullets.shotOne( _x, _y, directionLeftRight, _type );
+				
+			_bullets.shotOne( _x, _y, directionLeftRight, _type, 200 );
 		}
 		
 		private function buttonPressed( button:String ) : Boolean
