@@ -9,9 +9,9 @@ package
 		
 		private var _jump:Number;
 		private var _walk:Boolean = false;
-		private var _shoot:Boolean = false;
 		private var _shoted:Boolean = false;
-		private var _shooting:Boolean = false;
+		private var _shoting:Boolean = false;
+		private var _previousFrame:int = 0;
 		
 		private var _frameWidth:uint = 32;
 		private var _frameHeight:uint= 47;
@@ -19,11 +19,14 @@ package
 		private var _collideHeight:uint = 45;
 		
 		private var _xVelocity:Number;
+		
 		private var _gameState:FlxState;
+		private var _bullets:Bullets;
 
-		public function Player(x:int, y:int, xVelocity:int = 70) 
+		public function Player(x:int, y:int, xVelocity:int = 70, st:FlxState = null) 
 		{
 			super(x, y);
+			_gameState = st;
 			
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300
@@ -47,8 +50,11 @@ package
 			addAnimation("fall", [8, 9, 10], 30);
 			addAnimation("fall_simple", [9]);
 			addAnimation("stay", [0]);
-			addAnimation("shoot", [ 11, 12, 13, 14, 14, 15], 40, false );
+			addAnimation("shoot", [ 11, 12, 13, 14, 15, 15], 40, false );
 			addAnimation("shoot_off", [16, 13, 12, 11, 0], 40, false );
+			
+			//Creat bullets group
+			_bullets = new Bullets( _gameState );
 		}
 		
 		override public function update():void
@@ -107,24 +113,25 @@ package
 			//Start shooting processing
 			if ( buttonPressed('shoot') )
 			{
-				_shooting = true;
+				_shoting = true;
 			}
 			
-			if ( _shooting && !_shoted && frame == 15 )
+			if ( _shoting && !_shoted && frame == 15 && _previousFrame == 15 )
 			{
-				_gameState.add( new Bullet(x, y, 1) );
+				FlxG.log("shoot");
+				shot( x, y, facing, 1 );
 				_shoted = true;
 			}
 			
-			if ( _shooting && _shoted && frame == 0)
+			if ( _shoting && _shoted && frame == 0)
 			{
-				_shooting = false;
+				_shoting = false;
 				_shoted = false;
 			}
 			
 			
 			//Display user state
-			if (_shooting)
+			if (_shoting)
 			{
 				if (!_shoted)
 				{
@@ -155,7 +162,9 @@ package
 				play("stay");
 			}
 			
-			super.update();
+			//hack for saving previour frame as number(and not handler or other shit)
+			_previousFrame = 1 +  frame -1;
+			super.update();			
 		}
 		
 		public function shareHandler(st:FlxState):void
@@ -168,7 +177,17 @@ package
             super.hitBottom(Contact, Velocity);
         }
 		
-				private function buttonPressed( button:String ) : Boolean
+		private function shot( _x:int, _y:int, _facing:uint, _type:int = 1 ):void
+		{
+			var directionLeftRight:int = 1;
+			if ( _facing == LEFT )
+				directionLeftRight = -1;
+			else
+				directionLeftRight = 1;
+			_bullets.shotOne( _x, _y, directionLeftRight, _type );
+		}
+		
+		private function buttonPressed( button:String ) : Boolean
 		{
 			switch(button)
 			{

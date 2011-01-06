@@ -18,17 +18,17 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 600, 136);
+			Bob = new Player(100, 600, 136, this);
 			OneEnemy = new Enemy(900, 600, 1);
 			map = new Map;
 			map.AddToState(this);
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
 			add(Bob);
-			Bob.shareHandler(this);
 			add(OneEnemy);
 			FlxG.follow(Bob);
 			FlxG.followBounds(0, 0, map._map.width, map._map.height);
+			
 			super.create();
 		}
 		
