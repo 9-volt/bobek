@@ -13,12 +13,12 @@ package
 		public function World1Level2()
 		{
 			super();
-			bgColor = 0xff66b3ad;
+			bgColor = 0xffEC9CA4;
 		}
 		
 		override public function create():void
 		{
-			Bob = new Player(50, 400, 136);
+			Bob = new Player(50, 600, 136);
 			OneEnemy = new Enemy(700, 400, 1);
 			map = new World1Level2Map;
 			map.AddToState(this);

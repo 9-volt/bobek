@@ -125,9 +125,20 @@ package
 		public function AddToState(st:FlxState):void
 		{
 			
-			
-			
 			st.add(_environment);
+			
+			_nearBg = new FlxSprite(0, 200, bg2Img);
+			_nearBg.scrollFactor.x = 0.7;
+			_nearBg.scrollFactor.y = 0.3;
+			
+			_farBg = new FlxSprite(0, 300, bg1Img);
+			_farBg.scrollFactor.x = 0.5;
+			_farBg.scrollFactor.y = 0.1;
+			
+			st.add(_farBg);
+			st.add(_nearBg);
+			
+			
 			_testFan.AddToState(st, "forward");
 			st.add(_map);
 			st.add(_testmsg);
