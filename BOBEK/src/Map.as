@@ -62,10 +62,11 @@ package
 			_trap = new Trap(3456, 640);
 			_traps.add(_trap);
 			
-			_trap = new Trap(3584, 640);
+			_trap = new Trap(3552, 640);
 			_traps.add(_trap);
 			
 			_testFan = new Fan(770, 760);
+			
 		}
 		private function InitCandies():void
 		{
