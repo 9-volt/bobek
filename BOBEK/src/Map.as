@@ -50,15 +50,15 @@ package
 			_traps = new FlxGroup();
 			
 			var _trap : Trap;
-			_trap = new Trap(1796, 624);
+			_trap = new Trap(530, 720);
 			_traps.add(_trap);
 			
-			_trap = new Trap(1500, 850);
-			_traps.add(_trap);
-			_trap = new Trap(600, 670);
+			_trap = new Trap(1800, 500);
 			_traps.add(_trap);
 			
-			_testFan = new Fan(300, 700);
+			_trap = new Trap(2350, 650);
+			_traps.add(_trap);
+			_testFan = new Fan(770, 760);
 		}
 		private function InitCandies():void
 		{
