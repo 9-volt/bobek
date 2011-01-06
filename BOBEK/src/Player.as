@@ -9,8 +9,9 @@ package
 		
 		private var _jump:Number;
 		private var _walk:Boolean = false;
-		private var _shoted:Boolean = false;
-		private var _shoting:Boolean = false;
+		private var _shooted:Boolean = false;
+		private var _shooting:Boolean = false;
+		public var _canShoot:Boolean = false;
 		private var _previousFrame:int = 0;
 		
 		private var _frameWidth:uint = 32;
@@ -23,10 +24,10 @@ package
 		private var _gameState:FlxState;
 		private var _bullets:Bullets;
 
-		public function Player(x:int, y:int, xVelocity:int = 70, st:FlxState = null) 
+		public function Player( x:int, y:int, xVelocity:int = 70 ) 
 		{
 			super(x, y);
-			_gameState = st;
+			_gameState = FlxG.state as PlayState;
 			
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300
@@ -111,29 +112,29 @@ package
 			}
 			
 			//Start shooting processing
-			if ( buttonPressed('shoot') )
+			if ( buttonPressed('shoot') && _canShoot )
 			{
-				_shoting = true;
+				_shooting = true;
 			}
 			
-			if ( _shoting && !_shoted && frame == 15 && _previousFrame == 15 )
+			if ( _shooting && !_shooted && frame == 15 && _previousFrame == 15 )
 			{
 				FlxG.log("shoot");
 				shot( x, y, facing, 1 );
-				_shoted = true;
+				_shooted = true;
 			}
 			
-			if ( _shoting && _shoted && frame == 0)
+			if ( _shooting && _shooted && frame == 0)
 			{
-				_shoting = false;
-				_shoted = false;
+				_shooting = false;
+				_shooted = false;
 			}
 			
 			
 			//Display user state
-			if (_shoting)
+			if (_shooting)
 			{
-				if (!_shoted)
+				if (!_shooted)
 				{
 					play("shoot");
 				}

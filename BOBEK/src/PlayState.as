@@ -18,7 +18,9 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(100, 600, 136, this);
+			Bob = new Player(100, 600, 136);
+				//edit this to enable player shooting
+				Bob._canShoot = true;
 			OneEnemy = new Enemy(900, 600, 1);
 			map = new Map;
 			map.AddToState(this);
