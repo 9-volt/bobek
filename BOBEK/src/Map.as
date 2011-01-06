@@ -8,22 +8,22 @@ package
 		
 		[Embed(source = "../media/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
-		[Embed(source = "../media/mini/cloud.png")] private var cloud_img:Class;
-		[Embed(source = "../media/mini/cloud2.png")] private var cloud2_img:Class;
-		[Embed(source = "../media/mini/cloud3.png")] private var cloud3_img:Class;
-		[Embed(source = "../media/sun.png")] private var sun_img:Class;
 		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
-		[Embed(source = "../media/bob_small_tile.png")] private var hills2Img:Class;
+		[Embed(source = "../media/bg_back.png")] private var bg1Img:Class;
+		[Embed(source = "../media/bg_front.png")] private var bg2Img:Class;
+		
 		
 		
 		public var _map:FlxTilemap;
 		public var _hills:FlxBackdrop;
 		public var _environment:FlxGroup;
 		public var _traps:FlxGroup;
-		public var _sun:FlxSprite;
 		public var _candies:FlxGroup;
 		public var _testmsg:Message;
 		public var _testFan:Fan;
+		
+		public var _farBg:FlxSprite;
+		public var _nearBg:FlxSprite;
 		
 		 
 		public function Map()
@@ -58,6 +58,13 @@ package
 			
 			_trap = new Trap(2350, 650);
 			_traps.add(_trap);
+			
+			_trap = new Trap(3456, 640);
+			_traps.add(_trap);
+			
+			_trap = new Trap(3584, 640);
+			_traps.add(_trap);
+			
 			_testFan = new Fan(770, 760);
 		}
 		private function InitCandies():void
@@ -79,11 +86,6 @@ package
 			var scrollFactorX:Number = 0.3;
 			var scrollFactorY:Number = 0.8;
 			var tempSprite:FlxSprite;
-			
-			_sun = new FlxSprite(400, 10, sun_img);
-			_sun.scrollFactor.x = 0.2;
-			_sun.scrollFactor.y = 0.8;
-			_environment.add(_sun);
 			
 			
 			_hills = new FlxBackdrop(hillsImg, 0.6, 0.7, true, false);
@@ -121,6 +123,9 @@ package
 		}
 		public function AddToState(st:FlxState):void
 		{
+			
+			
+			
 			st.add(_environment);
 			_testFan.AddToState(st, "forward");
 			st.add(_map);
@@ -137,6 +142,7 @@ package
 				tempcandy.AddToState(st);
 			}
 		}
+		
 		public function update():void
 		{
 			_map.update();

@@ -8,7 +8,7 @@ package
 		
 		private var _type:String;
 		public var radius:int = 400;
-		public function Fan(x:int, y:int ) 
+		public function Fan(x:int, y:int) 
 		{
 			super(x, y);
 			loadGraphic(fanImg, true, false, 54, 36, false);
