@@ -10,6 +10,8 @@ package
 		
 		function Bullets( _st:FlxState = null, bulletsNumber:Number = 40 ):void
 		{
+			super();
+			
 			_gameState = _st;
 			_maxBulletsNumber = bulletsNumber;
 		}
@@ -19,7 +21,7 @@ package
 			if ( _totalBulletsNumber < _maxBulletsNumber )
 			{
 				var _bullet:Bullet = recycleBullet( _x, _y, directionLeftRight, _type );
-				_bullet.reset( _x, _y );
+				//_bullet.reset( _x, _y );
 				_gameState.add( _bullet );
 			}
 		}
@@ -31,21 +33,22 @@ package
 			if (_bullet == null)
 			{
 				
-				var _newBullet:Bullet = new Bullet( _x, _y, directionLeftRight, _type );
+				var _newBullet:Bullet = new Bullet( _type );
+				_newBullet.setType( _x, _y, directionLeftRight, _type );
 				this.add(_newBullet);
 				return _newBullet;
 			}
-			_bullet.setType( directionLeftRight, _type );
+			_bullet.setType( _x, _y, directionLeftRight, _type );
 			return _bullet;
 		}
 		
-		override public function update():void
-		{
+		//override public function update():void
+		//{
 			//saveOldPosition();
 			//updateMotion();
-			updateMembers();
+			//updateMembers();
 			//updateFlickering();
-		}
+		//}
 		
 	}
 
