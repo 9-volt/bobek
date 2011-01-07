@@ -9,150 +9,107 @@ package
 		[Embed(source = "../media/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
 		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
-		[Embed(source = "../media/bg_back.png")] private var bg1Img:Class;
-		[Embed(source = "../media/bg_front.png")] private var bg2Img:Class;
-		
-		
-		
+
 		public var _map:FlxTilemap;
-		public var _hills:FlxBackdrop;
-		public var _environment:FlxGroup;
+		
 		public var _traps:FlxGroup;
 		public var _candies:FlxGroup;
-		public var _testmsg:Message;
-		public var _testFan:Fan;
+		public var _fans:FlxGroup;
 		
 		public var _farBg:FlxSprite;
 		public var _nearBg:FlxSprite;
 		
+		private var _levelString:String;
+		private var _levelArr:Array;
+		private var _mapWidth:int;
 		 
 		public function Map()
 		{
 			
-			var grid_size:int = 16;
-			_testmsg = new Message(400, 400);
+			_levelString = new String(new layer1_string);
+			_levelArr = _levelString.split(",");
+			_mapWidth = 768/2 - 1;
 			
+			var grid_size:int = 16;
+			
+			
+			InitStuff();
+			
+			_levelString = _levelArr.join();
 			
 			//initialize main map
 			_map = new FlxTilemap;
-			_map.loadMap(new layer1_string, blocks_img, grid_size, grid_size);
+			_map.loadMap(_levelString, blocks_img, grid_size, grid_size);
 			
 			
 			
-			//init _environment
-			InitEnv();
-			InitCandies();
-			InitTraps();
 			
 		
 		}
-		private function InitTraps():void {
+		private function InitStuff():void {
+			
 			_traps = new FlxGroup();
+			_candies = new FlxGroup();
+			_fans = new FlxGroup();
 			
 			var _trap : Trap;
-			_trap = new Trap(530, 720);
-			_traps.add(_trap);
-			
-			_trap = new Trap(1800, 500);
-			_traps.add(_trap);
-			
-			_trap = new Trap(2350, 650);
-			_traps.add(_trap);
-			
-			_trap = new Trap(3456, 640);
-			_traps.add(_trap);
-			
-			_trap = new Trap(3552, 640);
-			_traps.add(_trap);
-			
-			_testFan = new Fan(770, 760);
-			
-		}
-		private function InitCandies():void
-		{
-			_candies = new FlxGroup();
-			
-			var tempCandy:Kanfeata = new Kanfeata(920, 240);
-			_candies.add(tempCandy);
-			
-			tempCandy = new Kanfeata(990, 200);
-			_candies.add(tempCandy);
-		}
-		
-		//initializes all the environment: clouds, hills.
-		
-		private function InitEnv():void 
-		{
-			_environment = new FlxGroup();
-			var scrollFactorX:Number = 0.3;
-			var scrollFactorY:Number = 0.8;
-			var tempSprite:FlxSprite;
+			var _candy :Kanfeata;
+			var _fan :Fan;
 			
 			
-			_hills = new FlxBackdrop(hillsImg, 0.6, 0.7, true, false);
-			_environment.add(_hills);
-			
-			//for (var i:int = 0; i < 10; i++) 
-			//{
-				//
-				//var rndX:Number = FlxU.random() * 2000;
-				//var rndY:Number = FlxU.random() * 120;
-				//var rndFactor:Number = FlxU.random() / 5;
-				//var rndSpeed:Number = FlxU.random() * 5;
-				//var rndKind:Number = int(FlxU.random()*3); // so that it would generate 0,1 or 2
-				//
-					//switch (rndKind)
-					//{
-						//case 0:
-							//tempSprite = new FlxSprite(rndX, rndY, cloud_img);
-							//break;
-						//case 1:
-							//tempSprite = new FlxSprite(rndX, rndY, cloud2_img);
-							//break;
-						//case 2:
-							//tempSprite = new FlxSprite(rndX, rndY, cloud3_img);
-							//break;
-						//default:
-							//
-						//break;
-					//}
-				//tempSprite.velocity.x = -5 - rndSpeed;
-				//tempSprite.scrollFactor.x = scrollFactorX + rndFactor;
-				//tempSprite.scrollFactor.y = scrollFactorY;
-				//_environment.add(tempSprite);
-			//}
+			for (var i:int = 0; i < _levelArr.length; i++) 
+			{
+				var ch: String = _levelArr[i];
+				if (ch == "12")
+				{
+					_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
+					
+					_traps.add(_trap);
+					_levelArr[i] = "0";
+				}
+				if (ch == "13")
+				{
+					_candy = new Kanfeata((i % _mapWidth) * 16, int(i / _mapWidth) * 16 );
+					_candies.add(_candy);
+					_levelArr[i] = "0";
+				}
+				if (ch == "14")
+				{
+					_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 7, "up", "forward");
+					_fans.add(_fan);
+					_levelArr[i] = "0";
+				}
+				if (ch == "18")
+				{
+					_fan = new Fan((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16 - 2 , "right", "forward");
+					_fans.add(_fan);
+					_levelArr[i] = "0";
+				}
+			}
 		}
 		public function AddToState(st:FlxState):void
 		{
 			
-			st.add(_environment);
+			for (var j:int = 0; j < _fans.members.length; j++) 
+			{
+				var tempfan:Fan = _fans.members[j] as Fan;
+				tempfan.AddToState(st);
+			}
 			
-			_nearBg = new FlxSprite(0, 200, bg2Img);
-			_nearBg.scrollFactor.x = 0.7;
-			_nearBg.scrollFactor.y = 0.3;
-			
-			_farBg = new FlxSprite(0, 300, bg1Img);
-			_farBg.scrollFactor.x = 0.5;
-			_farBg.scrollFactor.y = 0.1;
-			
-			st.add(_farBg);
-			st.add(_nearBg);
-			
-			
-			_testFan.AddToState(st, "forward");
 			st.add(_map);
-			st.add(_testmsg);
+			
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
 				var temptrap:Trap = _traps.members[i] as Trap;
 				temptrap.AddToState(st);
 				
 			}
-			for (var j:int = 0; j < _candies.members.length; j++) 
+			for (var k:int = 0; k < _candies.members.length; k++) 
 			{
-				var tempcandy:Kanfeata = _candies.members[j] as Kanfeata;
+				var tempcandy:Kanfeata = _candies.members[k] as Kanfeata;
 				tempcandy.AddToState(st);
 			}
+			
 		}
 		
 		public function update():void
@@ -171,7 +128,12 @@ package
 				if(tempcandy.visible)
 					tempcandy.update();
 			}
-			_environment.update();
+			for (j = 0; j < _fans.members.length; j++) 
+			{
+				var tempfan:Fan = _fans.members[j] as Fan;
+				if(tempfan.visible)
+					tempfan.update();
+			}
 		}
 		public function collide():void
 		{

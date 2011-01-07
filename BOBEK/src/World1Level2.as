@@ -18,7 +18,7 @@ package
 		
 		override public function create():void
 		{
-			Bob = new Player(50, 600, 136);
+			Bob = new Player(50, 500, 136);
 			OneEnemy = new Enemy(700, 400, 1);
 			map = new World1Level2Map;
 			map.AddToState(this);

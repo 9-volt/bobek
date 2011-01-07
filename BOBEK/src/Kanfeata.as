@@ -15,6 +15,10 @@ package
 		private var counter:Number;
 		private var fadeoutTime :Number = 2;
 		
+	
+		private var state:PlayState = FlxG.state as PlayState;
+		private var player:Player = state.Bob;
+		
 		public function Kanfeata(x:Number, y:Number) 
 		{
 			super(x, y);
@@ -40,6 +44,10 @@ package
 			if (!got)
 			{
 				super.update();
+				if (overlaps(player))
+				{
+					GetCandy();
+				}
 			}
 			else
 			{
@@ -63,22 +71,7 @@ package
 			}
 			
 		}
-		override public function hitLeft(Contact:FlxObject, Velocity:Number):void
-		{
-			GetCandy();
-		}
-		override public function hitRight(Contact:FlxObject, Velocity:Number):void
-		{
-			GetCandy();
-		}
-		override public function hitTop(Contact:FlxObject, Velocity:Number):void
-		{
-			GetCandy();
-		}
-		override public function hitBottom(Contact:FlxObject, Velocity:Number):void
-		{
-			GetCandy();
-		}
+		
 		public function GetCandy():void
 		{
 			got = true;
