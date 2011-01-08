@@ -9,7 +9,16 @@ package
 		[Embed(source = "../media/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
 		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
-
+		[Embed(source = "../media/font.ttf", fontFamily = "FONT")] 	public	var	msgFont:String
+		
+		public var _texts:Array = [
+									"Hello",
+									"This is a test message #1",
+									"This is test msg #2"];
+		public var _triggers:FlxGroup;
+		public var _triggeredTexts:FlxGroup;
+		public var _testText:FlxText;
+									
 		public var _map:FlxTilemap;
 		
 		public var _traps:FlxGroup;
@@ -22,9 +31,13 @@ package
 		private var _levelString:String;
 		private var _levelArr:Array;
 		private var _mapWidth:int;
+		
+		private var _testMsg:Message;
+		
 		 
 		public function Map()
 		{
+			_testMsg = new Message(500, 600, 150, "hello");
 			
 			_levelString = new String(new layer1_string);
 			_levelArr = _levelString.split(",");
@@ -51,10 +64,13 @@ package
 			_traps = new FlxGroup();
 			_candies = new FlxGroup();
 			_fans = new FlxGroup();
+			_triggeredTexts = new FlxGroup();
 			
 			var _trap : Trap;
 			var _candy :Candy;
 			var _fan :Fan;
+			var _text:FlxText;
+			var _textCounter:int = 0;
 			
 			
 			for (var i:int = 0; i < _levelArr.length; i++) 
@@ -90,12 +106,22 @@ package
 						_fans.add(_fan);
 						_levelArr[i] = "0";
 						break;
+					case "28": // text trigger
+						if (_textCounter < _texts.length)
+						{
+							_text = new FlxText((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16, 300, "", true);
+							_text.text = _texts[_textCounter];
+							_text.setFormat("FONT", 42);
+							_triggeredTexts.add(_text);
+							_textCounter++;
+						}
+						_levelArr[i] = "0";
+						break;
 				}
 			}
 		}
-		public function AddToState(st:FlxState):void
-		{
-			
+		public function AddToState(st:PlayState):void
+		{			
 			for (var j:int = 0; j < _fans.members.length; j++) 
 			{
 				var tempfan:Fan = _fans.members[j] as Fan;
@@ -103,6 +129,7 @@ package
 			}
 			
 			st.add(_map);
+			st.add(_testText);
 			
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
@@ -115,6 +142,11 @@ package
 				var tempcandy:Candy = _candies.members[k] as Candy;
 				tempcandy.AddToState(st);
 			}
+			for (i = 0; i < _triggeredTexts.members.length; i++) 
+			{
+				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
+				st.add(tempText);
+			}
 			
 		}
 		
@@ -126,6 +158,15 @@ package
 				var temptrap:Trap = _traps.members[i] as Trap;
 				if(temptrap.visible)
 					temptrap.update();
+			}
+			for (i = 0; i < _triggeredTexts.members.length; i++) 
+			{
+				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
+				if (tempText.visible)
+				{
+					tempText.setFormat("FONT", 42);
+					tempText.update();
+				}
 			}
 			
 			for (var j:int = 0; j < _candies.members.length; j++) 

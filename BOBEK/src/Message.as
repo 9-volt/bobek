@@ -1,20 +1,31 @@
 package  
 {
 	import org.flixel.*;
-	public class Message extends FlxSprite
+	public class Message
 	{
-		[Embed(source = "../media/text_bubble.png")] private var bubbleImg:Class;
-		public function Message(x:int,y:int) 
+		[Embed(source = "../media/font.ttf", fontFamily = "msgFont")] 	public	var	msgFont:String
+		
+		private var _text:FlxText;
+		public var radius:int = 200;
+		
+		private var state:PlayState = FlxG.state as PlayState;
+		private var player:Player = state.Bob;
+		
+		public function Message(x:int,y:int, w:int, msg:String) 
 		{
-			super(x, y);
-			loadGraphic(bubbleImg, true, false, 256, 64);
-			addAnimation("preload", [0, 1, 2, 3, 4, 5],15);
-			addAnimation("loaded", [5, 6, 7, 8],15);
-			play("loaded");
+			_text = new FlxText(x, y, w, "",true);
+			_text.setFormat("msgFont", 42, 0xffff00ff, "center", 0xff0000ff);
+			_text.text = msg;
+			_text.visible = false;
+			
 		}
-		override public function update():void 
+		public function AddToState(st:FlxState):void
 		{
-			super.update();
+			st.add(_text);
+		}
+		public function update():void 
+		{
+			_text.update();
 		}
 		
 	}
