@@ -34,7 +34,8 @@ package
 			emitter.setXSpeed(-50, 50);
 			emitter.setYSpeed(-50, 50);
 			
-			
+			//we do not need collision with player or other elements
+			solid = false;
 			
 			emitter.createSprites(sparkle_img, 32, 8);
 			
@@ -75,7 +76,7 @@ package
 		public function GetCandy():void
 		{
 			got = true;
-			solid = false; //so that the player won't hit it;	
+			//solid = false; //so that the player won't hit it;	
 			emitter.start(true, 2);
 			FlxG.play(SoundEffect);
 
