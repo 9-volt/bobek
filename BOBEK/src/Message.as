@@ -1,33 +1,46 @@
 package  
 {
 	import org.flixel.*;
-	public class Message
+	public class Message extends FlxText
 	{
 		[Embed(source = "../media/font.ttf", fontFamily = "msgFont")] 	public	var	msgFont:String
 		
 		private var _text:FlxText;
-		public var radius:int = 200;
+		public var radiusX:int = 50;
+		public var radiusY:int = 150;
+		private var startedShowing:Boolean = false;
+		private var _width:int;
 		
 		private var state:PlayState = FlxG.state as PlayState;
 		private var player:Player = state.Bob;
 		
 		public function Message(x:int,y:int, w:int, msg:String) 
 		{
-			_text = new FlxText(x, y, w, "",true);
-			_text.setFormat("msgFont", 42, 0xffff00ff, "center", 0xff0000ff);
-			_text.text = msg;
-			_text.visible = false;
+			super(x, y, w, "",true);
+			setFormat("msgFont", 42, 0xFFFFFF, "center", 0xFF000000);
+			text = msg;
+			alpha = 0;
+			_width = w;
 			
 		}
 		public function AddToState(st:FlxState):void
 		{
-			st.add(_text);
+			st.add(this);
 		}
-		public function update():void 
+		public override function update():void 
 		{
-			_text.update();
+			if (player.x > x + _width/2 - radiusX && player.x < x + _width/2 + radiusX && player.y > y - radiusY && player.y < y + radiusY)
+			{
+				startedShowing = true;
+				}
+			if (startedShowing)
+			{
+				if (alpha < 255)
+				{
+					alpha += FlxG.elapsed / 2;
+				}
+			}
 		}
-		
 	}
 
 }

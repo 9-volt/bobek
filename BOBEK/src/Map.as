@@ -17,7 +17,6 @@ package
 									"This is test msg #2"];
 		public var _triggers:FlxGroup;
 		public var _triggeredTexts:FlxGroup;
-		public var _testText:FlxText;
 									
 		public var _map:FlxTilemap;
 		
@@ -65,7 +64,7 @@ package
 			var _trap : Trap;
 			var _candy :Candy;
 			var _fan :Fan;
-			var _text:FlxText;
+			var _text:Message;
 			var _textCounter:int = 0;
 			
 			
@@ -105,9 +104,7 @@ package
 					case "28": // text trigger
 						if (_textCounter < _texts.length)
 						{
-							_text = new FlxText((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16, 300, "", true);
-							_text.text = _texts[_textCounter];
-							_text.setFormat("FONT", 42);
+							_text = new Message((i % _mapWidth) * 16 , int(i / _mapWidth) * 16, 300, _texts[_textCounter]);
 							_triggeredTexts.add(_text);
 							_textCounter++;
 						}
