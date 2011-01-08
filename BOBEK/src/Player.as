@@ -23,11 +23,16 @@ package
 		
 		private var _gameState:FlxState;
 		private var _bullets:Bullets;
+		private var _candy_bar:CandyBar;
 
 		public function Player( x:int, y:int, xVelocity:int = 70 ) 
 		{
 			super(x, y);
 			_gameState = FlxG.state as PlayState;
+			
+			//add Candy Bar
+			_candy_bar = new CandyBar( 40 );
+			_gameState.add(_candy_bar);
 			
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300

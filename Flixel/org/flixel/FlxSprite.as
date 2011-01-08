@@ -421,7 +421,7 @@ package org.flixel
 		 * @param	X			The X coordinate of the brush's top left corner on this sprite.
 		 * @param	Y			They Y coordinate of the brush's top left corner on this sprite.
 		 */
-		public function draw(Brush:FlxSprite,X:int=0,Y:int=0):void
+		public function draw(Brush:FlxSprite,X:int=0,Y:int=0, _width:int = 0, _height:int = 0 ):void
 		{
 			var b:BitmapData = Brush._framePixels;
 			
@@ -430,8 +430,14 @@ package org.flixel
 			{
 				_flashPoint.x = X;
 				_flashPoint.y = Y;
-				_flashRect2.width = b.width;
-				_flashRect2.height = b.height;
+				if( _width > 0 && _width <= b.width )
+					_flashRect2.width = _width;
+				else
+					_flashRect2.width = b.width;
+				if( _height > 0 && _height <= b.height )
+					_flashRect2.height = _height;
+				else
+					_flashRect2.height = b.height;
 				_pixels.copyPixels(b,_flashRect2,_flashPoint,null,null,true);
 				_flashRect2.width = _pixels.width;
 				_flashRect2.height = _pixels.height;
@@ -454,9 +460,21 @@ package org.flixel
 		 * 
 		 * @param	Color		The color with which to fill the graphic, format 0xAARRGGBB.
 		 */
-		public function fill(Color:uint):void
+		public function fill(Color:uint, _width:int = 0, _height:int = 0):void
 		{
-			_pixels.fillRect(_flashRect2,Color);
+			var __flashRect2:Rectangle = new Rectangle();
+			if ( _width > 0 || _height > 0 )
+			{
+				__flashRect2.width = (_width > 0) ? _width : _flashRect2.width;
+				__flashRect2.height = (_height > 0) ? _height : _flashRect2.height;
+				//fill specific area
+				_pixels.fillRect(__flashRect2, Color);
+			}
+			else
+			{
+				//fill all area
+				_pixels.fillRect(_flashRect2, Color);
+			}
 			if(_pixels != _framePixels)
 				calcFrame();
 		}
