@@ -4,9 +4,9 @@ package
 	
 	public class Bullet extends FlxSprite
 	{
-		[Embed(source = "../media/mini/bullet_1.png")]
+		[Embed(source = "../media/player/bullet_1.png")]
 		private var Bullet_1:Class;//18x12
-		[Embed(source = "../media/mini/bullet_2.png")]
+		[Embed(source = "../media/player/bullet_2.png")]
 		private var Bullet_2:Class;//35x24
 		
 		private var _directionLeftRight:int = 1;

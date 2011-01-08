@@ -4,7 +4,7 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		[Embed(source = "../media/mini/moving.png")]
+		[Embed(source = "../media/player/moving.png")]
 		private var BobSkin:Class;
 		
 		private var _jump:Number;

@@ -4,7 +4,7 @@ package
 	
 	public class Enemy extends FlxSprite
 	{
-		[Embed(source = "../media/mini/enemy.png")]
+		[Embed(source = "../media/enemies/broccoli.png")]
 		private var EnemySkin:Class;
 		
 		public function Enemy(x:int, y:int, type:int = 1) 
