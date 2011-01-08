@@ -14,12 +14,12 @@ package
 		public var emitter:FlxEmitter;
 		private var counter:Number;
 		private var fadeoutTime :Number = 2;
+		private var energyQuatity:int = 10;
 		
-	
 		private var state:PlayState = FlxG.state as PlayState;
 		private var player:Player = state.Bob;
 		
-		public function Kanfeata(x:Number, y:Number) 
+		public function Kanfeata(x:Number, y:Number, _energyQuatity:int = 10) 
 		{
 			super(x, y);
 			counter = 0;
@@ -38,6 +38,9 @@ package
 			solid = false;
 			
 			emitter.createSprites(sparkle_img, 32, 8);
+			
+			//assign energy quantity
+			energyQuatity = _energyQuatity;
 			
 		}
 		override public function update():void 
@@ -79,7 +82,7 @@ package
 			//solid = false; //so that the player won't hit it;	
 			emitter.start(true, 2);
 			FlxG.play(SoundEffect);
-
+			state.Bob._candy_bar.changeQuantity( energyQuatity );
 		}
 		public function AddToState(st:FlxState):void {
 			st.add(emitter);

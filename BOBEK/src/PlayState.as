@@ -28,6 +28,10 @@ package
 			
 			add(Bob);
 			add(OneEnemy);
+			
+			//should be added last for right z-index (visibility)
+			Bob.addCandyBar( 20 );
+			
 			FlxG.follow(Bob);
 			FlxG.followBounds(0, 0, map._map.width, map._map.height);
 			

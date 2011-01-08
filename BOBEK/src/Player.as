@@ -12,6 +12,8 @@ package
 		private var _shooted:Boolean = false;
 		private var _shooting:Boolean = false;
 		public var _canShoot:Boolean = false;
+		public var usedEnergy:Boolean = false;
+		
 		private var _previousFrame:int = 0;
 		
 		private var _frameWidth:uint = 32;
@@ -23,16 +25,13 @@ package
 		
 		private var _gameState:FlxState;
 		private var _bullets:Bullets;
-		private var _candy_bar:CandyBar;
+		public var _candy_bar:CandyBar;
+		private var energyWaster:int = 15;	//how fast energy is wasted ( 1 energyWaster = 1 second )
 
 		public function Player( x:int, y:int, xVelocity:int = 70 ) 
 		{
 			super(x, y);
 			_gameState = FlxG.state as PlayState;
-			
-			//add Candy Bar
-			_candy_bar = new CandyBar( 40 );
-			_gameState.add(_candy_bar);
 			
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300
@@ -101,12 +100,21 @@ package
                     velocity.y = -maxVelocity.y;
             }
 			
+			//substract used energy
+			if ( usedEnergy )
+			{
+				_candy_bar.changeQuantity( -( FlxG.elapsed * energyWaster ) );
+				usedEnergy = false;
+			}
+			
 			//increase velocity if we are falling and still press UP keys
 			if ( buttonPressed('up') && _jump < 0)
 			{
-				if (velocity.y > 0)
+				//if we are falling and we have energy
+				if ( velocity.y > 0 && _candy_bar.available )
 				{
 					velocity.y /= 1.3;
+					usedEnergy = true;
 				}
 			}
 			
@@ -149,7 +157,7 @@ package
 			}
 			else if (velocity.y > 0)
 			{
-				if( buttonPressed('up') )
+				if( buttonPressed('up') && _candy_bar.available )
 					play("fall");
 				else
 					play("fall_simple");
@@ -182,6 +190,12 @@ package
             _jump = 0;
             super.hitBottom(Contact, Velocity);
         }
+		
+		public function addCandyBar( energyQuantity:int = 0 ):void
+		{
+			_candy_bar = new CandyBar( energyQuantity );
+			_gameState.add(_candy_bar);
+		}
 		
 		private function shot( _x:int, _y:int, _facing:uint, _type:int = 1 ):void
 		{
