@@ -201,9 +201,15 @@ package
 		{
 			var directionLeftRight:int = 1;
 			if ( _facing == LEFT )
+			{
 				directionLeftRight = -1;
+				x += 3;
+			}
 			else
+			{
 				directionLeftRight = 1;
+				x -= 3;
+			}
 				
 			_bullets.shotOne( _x, _y, directionLeftRight, _type, 200 );
 		}
