@@ -32,13 +32,9 @@ package
 		private var _levelArr:Array;
 		private var _mapWidth:int;
 		
-		private var _testMsg:Message;
-		
 		 
 		public function Map()
 		{
-			_testMsg = new Message(500, 600, 150, "hello");
-			
 			_levelString = new String(new layer1_string);
 			_levelArr = _levelString.split(",");
 			_mapWidth = 768/2 - 1;
@@ -129,7 +125,6 @@ package
 			}
 			
 			st.add(_map);
-			st.add(_testText);
 			
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
@@ -164,7 +159,6 @@ package
 				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
 				if (tempText.visible)
 				{
-					tempText.setFormat("FONT", 42);
 					tempText.update();
 				}
 			}
