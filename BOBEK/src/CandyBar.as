@@ -36,7 +36,7 @@ package
 		
 		public function CandyBar( _quantity:int = 50 ) 
 		{
-			super( 590, 13 );//603 0
+			super( 640 - _width - 13, 13 );
 			scrollFactor.x = scrollFactor.y = 0;
 			
 			quantityNumber = _quantity;

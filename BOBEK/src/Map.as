@@ -53,37 +53,43 @@ package
 			_fans = new FlxGroup();
 			
 			var _trap : Trap;
-			var _candy :Kanfeata;
+			var _candy :Candy;
 			var _fan :Fan;
 			
 			
 			for (var i:int = 0; i < _levelArr.length; i++) 
 			{
 				var ch: String = _levelArr[i];
-				if (ch == "12")
+				switch( ch )
 				{
-					_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
-					
-					_traps.add(_trap);
-					_levelArr[i] = "0";
-				}
-				if (ch == "13")
-				{
-					_candy = new Kanfeata((i % _mapWidth) * 16, int(i / _mapWidth) * 16 );
-					_candies.add(_candy);
-					_levelArr[i] = "0";
-				}
-				if (ch == "14")
-				{
-					_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 7, "up", "forward");
-					_fans.add(_fan);
-					_levelArr[i] = "0";
-				}
-				if (ch == "18")
-				{
-					_fan = new Fan((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16 - 2 , "right", "forward");
-					_fans.add(_fan);
-					_levelArr[i] = "0";
+					case "1":
+					case "2":
+					case "3":
+					case "4":
+					case "5":
+					case "6":
+					case "7":
+						_candy = new Candy((i % _mapWidth) * 16, int(i / _mapWidth) * 16, ch );
+						
+						_candies.add(_candy);
+						_levelArr[i] = "0";
+						break;
+					case "12":
+						_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
+						
+						_traps.add(_trap);
+						_levelArr[i] = "0";
+						break;
+					case "14":
+						_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 7, "up", "forward");
+						_fans.add(_fan);
+						_levelArr[i] = "0";
+						break;
+					case "18":
+						_fan = new Fan((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16 - 2 , "right", "forward");
+						_fans.add(_fan);
+						_levelArr[i] = "0";
+						break;
 				}
 			}
 		}
@@ -106,7 +112,7 @@ package
 			}
 			for (var k:int = 0; k < _candies.members.length; k++) 
 			{
-				var tempcandy:Kanfeata = _candies.members[k] as Kanfeata;
+				var tempcandy:Candy = _candies.members[k] as Candy;
 				tempcandy.AddToState(st);
 			}
 			
@@ -124,7 +130,7 @@ package
 			
 			for (var j:int = 0; j < _candies.members.length; j++) 
 			{
-				var tempcandy:Kanfeata = _candies.members[j] as Kanfeata;
+				var tempcandy:Candy = _candies.members[j] as Candy;
 				if(tempcandy.visible)
 					tempcandy.update();
 			}

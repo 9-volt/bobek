@@ -14,15 +14,17 @@ package
 		public var emitter:FlxEmitter;
 		private var counter:Number;
 		private var fadeoutTime :Number = 2;
+		private var type:int;
 		private var energyQuatity:int = 10;
 		
 		private var state:PlayState = FlxG.state as PlayState;
 		private var player:Player = state.Bob;
 		
-		public function Kanfeata(x:Number, y:Number, _energyQuatity:int = 10) 
+		public function Kanfeata(x:Number, y:Number, _type:int = 0, _energyQuatity:int = 10) 
 		{
 			super(x, y);
 			counter = 0;
+			type = _type;
 			loadGraphic(image, true, false, 30, 22);
 			addAnimation("spin", [0, 1, 2, 3], 3, true);
 			play("spin");
