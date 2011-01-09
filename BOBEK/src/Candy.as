@@ -40,31 +40,31 @@ package
 				case "2":
 					energyQuatity = energyCandies[2];
 					loadGraphic(imgCandy_2, false, false, 28, 28);
-					addAnimation("candy", [2, 1, 0, 1, 2, 3, 4, 3], 5.4, true);
+					addAnimation("candy", [2, 1, 0, 1, 2, 3, 4, 3], 5.4 + Math.random( ), true);
 					break;
 				case "3":
 					energyQuatity =  energyCandies[3];
 					loadGraphic(imgCandy_3, false, false, 28, 28);
-					addAnimation("candy", [1, 0, 1, 2, 3, 4, 3, 2], 5.3, true);
+					addAnimation("candy", [1, 0, 1, 2, 3, 4, 3, 2], 5.3 + Math.random( ), true);
 					break;
 				case "4":
 					energyQuatity =  energyCandies[4];
 					loadGraphic(imgCandy_4, false, false, 28, 28);
-					addAnimation("candy", [2, 3, 4, 3, 2, 1, 0, 1], 5.7, true);
+					addAnimation("candy", [2, 3, 4, 3, 2, 1, 0, 1], 5.7 + Math.random( ), true);
 					break;
 				case "5":
 					energyQuatity =  energyCandies[5];
 					loadGraphic(imgCandy_5, false, false, 28, 28);
-					addAnimation("candy", [3, 4, 3, 2, 1, 0, 1, 2], 5.2, true);
+					addAnimation("candy", [3, 4, 3, 2, 1, 0, 1, 2], 5.2 + Math.random( ), true);
 					break;
 				case "6":
 					energyQuatity =  energyCandies[6];
 					loadGraphic(imgCandy_6, false, false, 28, 28);
-					addAnimation("candy", [3, 2, 1, 0, 1, 2, 3, 4], 5.5, true);
+					addAnimation("candy", [3, 2, 1, 0, 1, 2, 3, 4], 5.5 + Math.random( ), true);
 					break;
 				case "7":
 					loadGraphic(imgCandies, true, false, 28, 28);
-					addAnimation("candy", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5.6, true);
+					addAnimation("candy", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5.6 + Math.random( ), true);
 					break;
 				case "1":
 				default:
