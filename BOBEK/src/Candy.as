@@ -64,7 +64,7 @@ package
 					break;
 				case "7":
 					loadGraphic(imgCandies, true, false, 28, 28);
-					addAnimation("candy", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5.6 + Math.random( ), true);
+					addAnimation("candy", [0, 1, 2, 3, 4, 3, 2, 1], 5.6 + Math.random( ), true);
 					break;
 				case "1":
 				default:
@@ -76,6 +76,9 @@ package
 			}
 			play("candy");
 
+			//making bounding box smaller
+			height = 16;
+			offset.y = 6;
 			
 			emitter = new FlxEmitter(); //x and y of the emitter
 			emitter.x = x + width / 2;

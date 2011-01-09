@@ -27,17 +27,23 @@ package
 		
 		private var _levelString:String;
 		private var _levelArr:Array;
-		private var _mapWidth:int;
+		private var _mapWidth:int = 0;
 		
 		 
 		public function Map(str:Class)
 		{
 			_levelString = new String(new str);
 			_levelArr = _levelString.split(",");
-			_mapWidth = 768/2 - 1;
+		
+			//counting map tiles length
+			var tempStr:String = _levelString.split("\n")[0];
+			for ( var i:int = 0; i < tempStr.length; i ++ )
+			{
+				if( tempStr.charAt(i) == ',' )
+					_mapWidth++;
+			}
 			
 			var grid_size:int = 16;
-			
 			
 			InitStuff();
 			
