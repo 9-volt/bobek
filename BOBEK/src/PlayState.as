@@ -5,6 +5,9 @@ package
  
 	public class PlayState extends FlxState
 	{ 
+		
+		[Embed(source = "../media/levels/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
+		
 		public var Bob:Player;		
 		private var OneEnemy:Enemy;		
 		private var map:Map;
@@ -22,7 +25,7 @@ package
 				//edit this to enable player shooting
 			Bob._canShoot = true;
 			OneEnemy = new Enemy(900, 600, 1);
-			map = new Map;
+			map = new Map(layer1_string);
 			map.AddToState(this);
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
@@ -46,9 +49,6 @@ package
 			if (FlxG.keys.justPressed("R")) {
 				FlxG.fade.start(0xffffffff, 0.2, restart);
 			}
-			if (FlxG.keys.justPressed("N")) {
-				FlxG.fade.start(0xffffffff, 0.2, NextLevel);
-			}
 			super.update(); 
 			map.update();
 			CheckPosition();
@@ -61,14 +61,9 @@ package
 			if ((Bob.x + Bob.width < 0) || (Bob.y < 0) || (Bob.y > map._map.height)) {
 				FlxG.fade.start(0xffffffff, 0.2, restart);
 			}
-			if (Bob.x > map._map.width)
-				FlxG.state = new World1Level2();
 		}
 		public function restart():void {
 			FlxG.state = new PlayState();
-		}
-		public function NextLevel():void {
-			FlxG.state = new World1Level2;
 		}
 		
 	}

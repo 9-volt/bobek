@@ -4,9 +4,9 @@ package
 	
 	public class Fan extends FlxSprite
 	{
-		[Embed(source = "../media/fans.png")] private var fanImg:Class;
-		[Embed(source = "../media/fans_side.png")] private var fanSideImg:Class;
-		[Embed(source = "../media/fans_down.png")] private var fanDownImg:Class;
+		[Embed(source = "../media/elements/fans.png")] private var fanImg:Class;
+		[Embed(source = "../media/elements/fans_side.png")] private var fanSideImg:Class;
+		[Embed(source = "../media/elements/fans_down.png")] private var fanDownImg:Class;
 		
 		
 		private var _type:String;

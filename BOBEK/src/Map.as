@@ -6,35 +6,32 @@ package
 	public class Map
 	{
 		
-		[Embed(source = "../media/tiles.png")] private var blocks_img:Class;
-		[Embed(source = "../media/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
+		[Embed(source = "../media/elements/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
-		[Embed(source = "../media/font.ttf", fontFamily = "FONT")] 	public	var	msgFont:String
 		
-		public var _texts:Array = [
+		private var _texts:Array = [
 									"Hello",
 									"This is a test message #1",
 									"This is test msg #2"];
-		public var _triggers:FlxGroup;
-		public var _triggeredTexts:FlxGroup;
+		private var _triggeredTexts:FlxGroup;
 									
 		public var _map:FlxTilemap;
 		
 		public var _traps:FlxGroup;
 		public var _candies:FlxGroup;
-		public var _fans:FlxGroup;
+		private var _fans:FlxGroup;
 		
-		public var _farBg:FlxSprite;
-		public var _nearBg:FlxSprite;
+		private var _farBg:FlxSprite;
+		private var _nearBg:FlxSprite;
 		
 		private var _levelString:String;
 		private var _levelArr:Array;
 		private var _mapWidth:int;
 		
 		 
-		public function Map()
+		public function Map(str:Class)
 		{
-			_levelString = new String(new layer1_string);
+			_levelString = new String(new str);
 			_levelArr = _levelString.split(",");
 			_mapWidth = 768/2 - 1;
 			
@@ -48,10 +45,6 @@ package
 			//initialize main map
 			_map = new FlxTilemap;
 			_map.loadMap(_levelString, blocks_img, grid_size, grid_size);
-			
-			
-			
-			
 		
 		}
 		private function InitStuff():void {

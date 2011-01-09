@@ -3,7 +3,7 @@ package
 	import org.flixel.*;
 	public class Message extends FlxText
 	{
-		[Embed(source = "../media/font.ttf", fontFamily = "msgFont")] 	public	var	msgFont:String
+		[Embed(source = "../media/fonts/font.ttf", fontFamily = "msgFont")] 	public	var	msgFont:String
 		
 		private var _text:FlxText;
 		public var radiusX:int = 50;

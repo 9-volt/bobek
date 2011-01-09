@@ -5,9 +5,9 @@ package
 	
 	public class Trap extends FlxSprite
 	{
-		[Embed(source = "../media/mini/trap.png")] private var trap_img:Class;
-		[Embed(source = "../media/trap_part.png")] private var trap_part_img:Class;
-		[Embed(source = "../media/mini/trap_part.png")] private var trap_shake_part_img:Class;
+		[Embed(source = "../media/elements/trap.png")] private var trap_img:Class;
+		[Embed(source = "../media/elements/trap_part.png")] private var trap_part_img:Class;
+		[Embed(source = "../media/elements/trap_part_mini.png")] private var trap_shake_part_img:Class;
 		[Embed(source="../media/sounds/leaves.mp3")] private var SoundEffect:Class
 		
 		public var emitter:FlxEmitter;

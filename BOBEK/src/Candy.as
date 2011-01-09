@@ -12,7 +12,7 @@ package
 		[Embed(source = "../media/elements/candy_4.png")] private var imgCandy_4:Class;		
 		[Embed(source = "../media/elements/candy_5.png")] private var imgCandy_5:Class;		
 		[Embed(source = "../media/elements/candy_6.png")] private var imgCandy_6:Class;		
-		[Embed(source = "../media/star_sparkle.png")] private var sparkle_img:Class;
+		[Embed(source = "../media/elements/star_sparkle.png")] private var sparkle_img:Class;
 		[Embed(source="../media/sounds/candy_pick.mp3")] private var SoundEffect:Class
 		
 		public var got: Boolean = false;	
