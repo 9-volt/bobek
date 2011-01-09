@@ -39,6 +39,8 @@ package
 			FlxG.followBounds(0, 0, map._map.width, map._map.height);
 			
 			super.create();
+			
+			FlxG.flash.start(0xffffffff, 0.2);
 		}
 		
 		override public function update():void 
@@ -47,7 +49,7 @@ package
 			
 			
 			if (FlxG.keys.justPressed("R")) {
-				FlxG.fade.start(0xffffffff, 0.2, restart);
+				restart();
 			}
 			super.update(); 
 			map.update();

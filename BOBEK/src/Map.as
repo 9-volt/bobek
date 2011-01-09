@@ -20,6 +20,7 @@ package
 		public var _traps:FlxGroup;
 		public var _candies:FlxGroup;
 		private var _fans:FlxGroup;
+		private var _spikes:FlxGroup;
 		
 		private var _farBg:FlxSprite;
 		private var _nearBg:FlxSprite;
@@ -53,11 +54,13 @@ package
 			_candies = new FlxGroup();
 			_fans = new FlxGroup();
 			_triggeredTexts = new FlxGroup();
+			_spikes = new FlxGroup();
 			
 			var _trap : Trap;
 			var _candy :Candy;
 			var _fan :Fan;
 			var _text:Message;
+			var _spike:Spike;
 			var _textCounter:int = 0;
 			
 			
@@ -82,6 +85,12 @@ package
 						_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
 						
 						_traps.add(_trap);
+						_levelArr[i] = "0";
+						break;
+					case "13":
+						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16);
+						
+						_spikes.add(_spike);
 						_levelArr[i] = "0";
 						break;
 					case "14":
@@ -132,12 +141,18 @@ package
 				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
 				st.add(tempText);
 			}
+			for (i = 0; i < _spikes.members.length; i++) 
+			{
+				var tempSpike:Spike = _spikes.members[i] as Spike;
+				st.add(tempSpike);
+			}
 			
 		}
 		
 		public function update():void
 		{
 			_map.update();
+			_spikes.update();
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
 				var temptrap:Trap = _traps.members[i] as Trap;
