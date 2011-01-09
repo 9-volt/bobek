@@ -8,6 +8,8 @@ package
 		private var BobSkin:Class;
 		
 		private var _jump:Number;
+		private var _jumped:Boolean = false;
+		private var _continiousJump:Boolean = true; //does player continious jumping on UP key pressing or not
 		private var _walk:Boolean = false;
 		private var _shooted:Boolean = false;
 		private var _shooting:Boolean = false;
@@ -83,8 +85,10 @@ package
 			}
 			
 			//Jumping
-			if( (_jump >= 0) && buttonPressed('up') )
+			if( ( (!_jumped && _jump == 0) || _jump > 0 ) && buttonPressed('up') )
             {
+				if( !_continiousJump )
+					_jumped = true;
 				_jump += FlxG.elapsed;
 					
 				//FlxG.log(FlxG.elapsed);
@@ -116,6 +120,12 @@ package
 					velocity.y /= 1.3;
 					usedEnergy = true;
 				}
+			}
+			
+			//if single jump is used, set availability for next jumping on UP key release 
+			if ( !_continiousJump && buttonReleased('up') )
+			{
+				_jumped = false;
 			}
 			
 			//Stop moving

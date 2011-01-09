@@ -16,8 +16,8 @@ package
 		private var barFull:FlxSprite;
 		private var barEmpty:FlxSprite;
 		
-		private var _height:int = 64;
-		private var _width:int = 37;
+		private var _height:int = 96;
+		private var _width:int = 56;
 		
 		private var quantityNumber:Number = 0;
 		private var heightFull:int = 0;
@@ -36,7 +36,7 @@ package
 		
 		public function CandyBar( _quantity:int = 50 ) 
 		{
-			super( 640 - _width - 13, 13 );
+			super( 13, 13 );
 			scrollFactor.x = scrollFactor.y = 0;
 			
 			quantityNumber = _quantity;
