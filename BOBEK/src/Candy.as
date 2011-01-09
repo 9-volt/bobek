@@ -38,36 +38,43 @@ package
 			switch( type )
 			{
 				case "2":
-					loadGraphic(imgCandy_2, false, false, 28, 28);
 					energyQuatity = energyCandies[2];
+					loadGraphic(imgCandy_2, false, false, 28, 28);
+					addAnimation("candy", [2, 1, 0, 1, 2, 3, 4, 3], 5.4, true);
 					break;
 				case "3":
-					loadGraphic(imgCandy_3, false, false, 28, 28);
 					energyQuatity =  energyCandies[3];
+					loadGraphic(imgCandy_3, false, false, 28, 28);
+					addAnimation("candy", [1, 0, 1, 2, 3, 4, 3, 2], 5.3, true);
 					break;
 				case "4":
-					loadGraphic(imgCandy_4, false, false, 28, 28);
 					energyQuatity =  energyCandies[4];
+					loadGraphic(imgCandy_4, false, false, 28, 28);
+					addAnimation("candy", [2, 3, 4, 3, 2, 1, 0, 1], 5.7, true);
 					break;
 				case "5":
-					loadGraphic(imgCandy_5, false, false, 28, 28);
 					energyQuatity =  energyCandies[5];
+					loadGraphic(imgCandy_5, false, false, 28, 28);
+					addAnimation("candy", [3, 4, 3, 2, 1, 0, 1, 2], 5.2, true);
 					break;
 				case "6":
-					loadGraphic(imgCandy_6, false, false, 28, 28);
 					energyQuatity =  energyCandies[6];
+					loadGraphic(imgCandy_6, false, false, 28, 28);
+					addAnimation("candy", [3, 2, 1, 0, 1, 2, 3, 4], 5.5, true);
 					break;
 				case "7":
 					loadGraphic(imgCandies, true, false, 28, 28);
-					addAnimation("multicandie", [0, 1, 2, 3, 4, 5], 5, true);
-					play("multicandie");
+					addAnimation("candy", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5.6, true);
 					break;
 				case "1":
 				default:
 					energyQuatity =  energyCandies[1];
-					loadGraphic(imgCandy_1, false, false, 28, 28);
+					loadGraphic(imgCandy_1, true, false, 28, 28);
+					addAnimation("candy", [0, 1, 2, 3, 4, 3, 2, 1], 5.1, true);
+					
 					break;
 			}
+			play("candy");
 
 			
 			emitter = new FlxEmitter(); //x and y of the emitter
@@ -98,7 +105,7 @@ package
 				{
 					if ( type == "7" )
 					{
-						energyQuatity = energyCandies[frame];
+						energyQuatity = energyCandies[frame % energyCandies.length];
 					}
 					GetCandy();
 				}
