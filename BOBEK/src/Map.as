@@ -11,6 +11,8 @@ package
 		[Embed(source = "../media/elements/clouds/cloud1.png")] private var clouds1Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud2.png")] private var clouds2Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud3.png")] private var clouds3Img:Class;
+		[Embed(source = "../media/elements/clouds/cloud4.png")] private var clouds4Img:Class;
+		[Embed(source = "../media/elements/clouds/cloud5.png")] private var clouds5Img:Class;
 		
 		
 		private var _texts:Array = [
@@ -85,8 +87,8 @@ package
 				var rndX:Number = FlxU.random() * _mapWidth * 16;
 				var rndY:Number = FlxU.random() * 120 + 850;
 				var rndFactor:Number = FlxU.random() / 5;
-				var rndSpeed:Number = FlxU.random() * 1;
-				var rndKind:Number = int(FlxU.random()*3); // so that it would generate 0,1 or 2
+				var rndSpeed:Number = FlxU.random() * 10;
+				var rndKind:Number = int(FlxU.random()*5); // so that it would generate 0,1 or 2
 				
 					switch (rndKind)
 					{
@@ -98,6 +100,12 @@ package
 							break;
 						case 2:
 							tempSprite = new FlxSprite(rndX, rndY, clouds3Img);
+							break;
+						case 3:
+							tempSprite = new FlxSprite(rndX, rndY, clouds4Img);
+							break;
+						case 4:
+							tempSprite = new FlxSprite(rndX, rndY, clouds5Img);
 							break;
 						default:
 							
@@ -116,6 +124,7 @@ package
 			_fans = new FlxGroup();
 			_spikes = new FlxGroup();			
 			_enemies = new FlxGroup();
+			_nearBg = new FlxSprite(0, 0, hillsImg);
 		
 			var _trap : Trap;
 			var _candy :Candy;
@@ -157,7 +166,7 @@ package
 						break;
 					case "14":	//Spike
 					case "29":	//Spike big
-						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16);
+						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16, (ch == "14" ? true : false) );
 						
 						_spikes.add(_spike);
 						_levelArr[i] = "0";
@@ -169,7 +178,7 @@ package
 						_levelArr[i] = "0";
 						break;
 					case "16":	//Fun view:UP		dir:Forward
-						_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 7, "up", "forward");
+						_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16, "up", "forward");
 						_fans.add(_fan);
 						_levelArr[i] = "0";
 						break;
@@ -222,10 +231,18 @@ package
 		}
 		public function AddToState(st:PlayState):void
 		{			
+			st.add(_nearBg);
+			_nearBg.scrollFactor.x = 0.4;
 			for (var j:int = 0; j < _fans.members.length; j++) 
 			{
 				var tempfan:Fan = _fans.members[j] as Fan;
 				tempfan.AddToState(st);
+			}
+			
+			for (i = 0; i < _spikes.members.length; i++) 
+			{
+				var tempSpike:Spike = _spikes.members[i] as Spike;
+				st.add(tempSpike);
 			}
 			
 			st.add(_map);
@@ -246,11 +263,6 @@ package
 				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
 				st.add(tempText);
 			}
-			for (i = 0; i < _spikes.members.length; i++) 
-			{
-				var tempSpike:Spike = _spikes.members[i] as Spike;
-				st.add(tempSpike);
-			}
 			
 		}
 		public function AddFrontLayer(st:PlayState):void
@@ -264,7 +276,6 @@ package
 		public function update():void
 		{
 			_map.update();
-			_spikes.update();
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
 				var temptrap:Trap = _traps.members[i] as Trap;

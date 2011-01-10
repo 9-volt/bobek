@@ -19,7 +19,7 @@ package
 		public var over:Boolean = false;
 		public var emitter:FlxEmitter;
 		private var counter:Number;
-		private var fadeoutTime :Number = 2;
+		private var fadeoutTime :Number = 1;
 		
 		private var type:String;
 		private var energyQuatity:int = 10;
