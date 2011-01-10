@@ -9,7 +9,8 @@ package
 		[Embed(source = "../media/levels/Level1Layer1.txt", mimeType = "application/octet-stream")] private var layer1_string:Class;
 		
 		public var Bob:Player;		
-		private var OneEnemy:Enemy;		
+		private var OneEnemy:Enemy;
+		private var Enemies:FlxGroup;
 		private var map:Map;
 		
 		
@@ -24,15 +25,16 @@ package
 			Bob = new Player(100, 600, 136);
 				//edit this to enable player shooting
 			Bob._canShoot = true;
-			OneEnemy = new Enemy(900, 600, 1);
+			//OneEnemy = new Enemy(900, 600, 1);
 			map = new Map(layer1_string);
-			map.AddToState(this);
+			map.AddToState();
 			FlxU.setWorldBounds(0,0,map._map.width,map._map.height);
 			
 			add(Bob);
-			add(OneEnemy);
+			add(Enemies);
 			
-			map.AddFrontLayer(this);
+			map.AddFrontLayer();
+			
 			//should be added last for right z-index (visibility)
 			Bob.addCandyBar( 20 );
 			
@@ -57,7 +59,7 @@ package
 			CheckPosition();
 			FlxU.collide(Bob, map._map);
 			FlxU.collide(Bob, map._traps);
-			FlxU.collide(OneEnemy, map._map);
+			FlxU.collide(Enemies, map._map);
 			map.collide();
 		}
 		public function CheckPosition():void {

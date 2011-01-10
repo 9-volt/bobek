@@ -4,9 +4,6 @@ package
 	
 	public class CandyBar  extends FlxSprite
 	{
-		[Embed(source = "../media/elements/candy_bar.png")]
-		private var candy_bar:Class;
-		
 		[Embed(source = "../media/elements/candy_bar_empty.png")]
 		private var candy_bar_empty:Class;
 		

@@ -25,7 +25,7 @@ package
 		
 		private var _xVelocity:Number;
 		
-		private var _gameState:FlxState;
+		private var _gameState:FlxState = FlxG.state as PlayState;
 		private var _bullets:Bullets;
 		public var _candy_bar:CandyBar;
 		private var energyWaster:int = 15;	//how fast energy is wasted ( 1 energyWaster = 1 second )
@@ -33,7 +33,6 @@ package
 		public function Player( x:int, y:int, xVelocity:int = 70 ) 
 		{
 			super(x, y);
-			_gameState = FlxG.state as PlayState;
 			
 			acceleration.y = 800; //Set the gravity - 1200
             maxVelocity.y = 250; // 300

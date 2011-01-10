@@ -7,7 +7,7 @@ package
 	{
 		
 		[Embed(source = "../media/elements/tiles.png")] private var blocks_img:Class;
-		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
+		//[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
 		[Embed(source = "../media/elements/clouds/cloud1.png")] private var clouds1Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud2.png")] private var clouds2Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud3.png")] private var clouds3Img:Class;
@@ -31,13 +31,14 @@ package
 		private var _enemies:FlxGroup = new FlxGroup();
 		private var _hasClouds:Boolean;
 		
-		private var _farBg:FlxSprite;
-		private var _nearBg:FlxSprite;
+		//private var _farBg:FlxSprite;
+		//private var _nearBg:FlxSprite;
 		
 		private var _levelString:String;
 		private var _levelArr:Array;
 		private var _mapWidth:int = 0;
 		
+		private var _gameState:FlxState = FlxG.state as PlayState;		
 		 
 		public function Map(str:Class, hasClouds:Boolean = true)
 		{
@@ -73,6 +74,7 @@ package
 			_map.loadMap(_levelString, blocks_img, grid_size, grid_size);
 		
 		}
+		
 		private function InitClouds():void {
 			_clouds = new FlxGroup();
 			var tempSprite:FlxSprite;
@@ -117,6 +119,7 @@ package
 				_clouds.add(tempSprite);
 			}
 		}
+		
 		private function InitStuff():void {
 			_triggeredTexts = new FlxGroup();		
 			_traps = new FlxGroup();
@@ -124,7 +127,7 @@ package
 			_fans = new FlxGroup();
 			_spikes = new FlxGroup();			
 			_enemies = new FlxGroup();
-			_nearBg = new FlxSprite(0, 0, hillsImg);
+			//_nearBg = new FlxSprite(0, 0, hillsImg);
 		
 			var _trap : Trap;
 			var _candy :Candy;
@@ -229,50 +232,53 @@ package
 				}
 			}
 		}
-		public function AddToState(st:PlayState):void
+		
+		public function AddToState():void
 		{			
-			st.add(_nearBg);
-			_nearBg.scrollFactor.x = 0.4;
+			//_gameState.add(_nearBg);
+			//_nearBg.scrollFactor.x = 0.4;
 			for (var j:int = 0; j < _fans.members.length; j++) 
 			{
 				var tempfan:Fan = _fans.members[j] as Fan;
-				tempfan.AddToState(st);
+				tempfan.AddToState(_gameState);
 			}
 			
 			for (i = 0; i < _spikes.members.length; i++) 
 			{
 				var tempSpike:Spike = _spikes.members[i] as Spike;
-				st.add(tempSpike);
+				_gameState.add(tempSpike);
 			}
 			
-			st.add(_map);
+			_gameState.add(_map);
 			
 			for (var i:int = 0; i < _traps.members.length; i++) 
 			{
 				var temptrap:Trap = _traps.members[i] as Trap;
-				temptrap.AddToState(st);
+				temptrap.AddToState(_gameState);
 				
 			}
 			for (var k:int = 0; k < _candies.members.length; k++) 
 			{
 				var tempcandy:Candy = _candies.members[k] as Candy;
-				tempcandy.AddToState(st);
+				tempcandy.AddToState(_gameState);
 			}
 			for (i = 0; i < _triggeredTexts.members.length; i++) 
 			{
 				var tempText:FlxText = _triggeredTexts.members[i] as FlxText;
-				st.add(tempText);
+				_gameState.add(tempText);
 			}
 			
 		}
-		public function AddFrontLayer(st:PlayState):void
+		
+		public function AddFrontLayer():void
 		{
 			 
 			if (_hasClouds)
 			{
-				st.add(_clouds);
+				_gameState.add(_clouds);
 			}
 		}
+		
 		public function update():void
 		{
 			_map.update();
@@ -308,6 +314,7 @@ package
 				_clouds.update();
 			}
 		}
+		
 		public function collide():void
 		{
 			for (var i:int = 0; i < _traps.members.length; i++) 
