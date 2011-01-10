@@ -17,15 +17,16 @@ package
 									"Hello",
 									"This is a test message #1",
 									"This is test msg #2"];
-		private var _triggeredTexts:FlxGroup;
+		private var _triggeredTexts:FlxGroup = new FlxGroup();
 									
 		public var _map:FlxTilemap;
 		
-		public var _traps:FlxGroup;
-		public var _candies:FlxGroup;
-		private var _fans:FlxGroup;
-		private var _spikes:FlxGroup;
+		public var _traps:FlxGroup = new FlxGroup();
+		public var _candies:FlxGroup = new FlxGroup();
+		private var _fans:FlxGroup = new FlxGroup();
+		private var _spikes:FlxGroup = new FlxGroup();
 		private var _clouds:FlxGroup;
+		private var _enemies:FlxGroup = new FlxGroup();
 		private var _hasClouds:Boolean;
 		
 		private var _farBg:FlxSprite;
@@ -53,6 +54,8 @@ package
 			
 			InitStuff();
 			
+			
+			
 			_hasClouds = hasClouds;
 			
 			if (hasClouds)
@@ -61,6 +64,7 @@ package
 			}
 			
 			_levelString = _levelArr.join();
+			//trace( _levelString);
 			
 			//initialize main map
 			_map = new FlxTilemap;
@@ -106,13 +110,13 @@ package
 			}
 		}
 		private function InitStuff():void {
-			
+			_triggeredTexts = new FlxGroup();		
 			_traps = new FlxGroup();
 			_candies = new FlxGroup();
 			_fans = new FlxGroup();
-			_triggeredTexts = new FlxGroup();
-			_spikes = new FlxGroup();
-			
+			_spikes = new FlxGroup();			
+			_enemies = new FlxGroup();
+		
 			var _trap : Trap;
 			var _candy :Candy;
 			var _fan :Fan;
@@ -120,8 +124,7 @@ package
 			var _spike:Spike;
 			var _textCounter:int = 0;
 			
-			
-			for (var i:int = 0; i < _levelArr.length; i++) 
+			for ( var i:int = 0; i < _levelArr.length; i++ )
 			{
 				var ch: String = _levelArr[i];
 				switch( ch )
@@ -138,29 +141,74 @@ package
 						_candies.add(_candy);
 						_levelArr[i] = "0";
 						break;
-					case "12":
-						_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
-						
-						_traps.add(_trap);
+					case "8":
+						//enemy 1
 						_levelArr[i] = "0";
 						break;
-					case "13":
+					case "9":
+						//enemy 2
+						_levelArr[i] = "0";
+						break;
+					case "10":	//Empty
+					case "11":	//Empty
+					case "12":	//Empty
+					case "13":	//Empty
+						_levelArr[i] = "0";
+						break;
+					case "14":	//Spike
+					case "29":	//Spike big
 						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16);
 						
 						_spikes.add(_spike);
 						_levelArr[i] = "0";
 						break;
-					case "14":
+					case "15":
+						_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
+						
+						_traps.add(_trap);
+						_levelArr[i] = "0";
+						break;
+					case "16":	//Fun view:UP		dir:Forward
 						_fan = new Fan((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 7, "up", "forward");
 						_fans.add(_fan);
 						_levelArr[i] = "0";
 						break;
-					case "18":
+					case "17":	//Fun view:UP		dir:Forward
+						_levelArr[i] = "0";
+						break;
+					case "18":	//Fun view:DOWN		dir:Forward
+						_levelArr[i] = "0";	
+						break;
+					case "19":	//Fun view:DOWN		dir:Backward
+						_levelArr[i] = "0";
+						break;
+					case "20":	//Fun view:RIGHT	dir:Forward
 						_fan = new Fan((i % _mapWidth) * 16 - 4, int(i / _mapWidth) * 16 - 2 , "right", "forward");
 						_fans.add(_fan);
 						_levelArr[i] = "0";
 						break;
-					case "28": // text trigger
+					case "21":	//Fun view:RIGHT	dir:Backward
+						_levelArr[i] = "0";
+						break;
+					case "22":	//Fun view:LEFT		dir:Forward
+						_levelArr[i] = "0";
+						break;
+					case "23":	//Fun view:LEFT		dir:Backward
+						_levelArr[i] = "0";
+						break;
+					case "24":	//Fun view:UP		dir:Forward-Backward
+						_levelArr[i] = "0";
+						break;
+					case "25":	//Fun view:RIGHT	dir:Forward-Backward
+						_levelArr[i] = "0";
+						break;
+					case "26":	//Fun view:DOWN		dir:Forward-Backward
+						_levelArr[i] = "0";
+						break;
+					case "27":	//Fun view:LEFT		dir:Forward-Backward
+						_levelArr[i] = "0";
+						break;
+					case "28":	// text trigger
 						if (_textCounter < _texts.length)
 						{
 							_text = new Message((i % _mapWidth) * 16 , int(i / _mapWidth) * 16, 300, _texts[_textCounter]);
