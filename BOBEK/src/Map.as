@@ -8,6 +8,10 @@ package
 		
 		[Embed(source = "../media/elements/tiles.png")] private var blocks_img:Class;
 		[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
+		[Embed(source = "../media/elements/clouds/cloud1.png")] private var clouds1Img:Class;
+		[Embed(source = "../media/elements/clouds/cloud2.png")] private var clouds2Img:Class;
+		[Embed(source = "../media/elements/clouds/cloud3.png")] private var clouds3Img:Class;
+		
 		
 		private var _texts:Array = [
 									"Hello",
@@ -21,6 +25,8 @@ package
 		public var _candies:FlxGroup;
 		private var _fans:FlxGroup;
 		private var _spikes:FlxGroup;
+		private var _clouds:FlxGroup;
+		private var _hasClouds:Boolean;
 		
 		private var _farBg:FlxSprite;
 		private var _nearBg:FlxSprite;
@@ -30,7 +36,7 @@ package
 		private var _mapWidth:int = 0;
 		
 		 
-		public function Map(str:Class)
+		public function Map(str:Class, hasClouds:Boolean = true)
 		{
 			_levelString = new String(new str);
 			_levelArr = _levelString.split(",");
@@ -47,12 +53,57 @@ package
 			
 			InitStuff();
 			
+			_hasClouds = hasClouds;
+			
+			if (hasClouds)
+			{
+				InitClouds();
+			}
+			
 			_levelString = _levelArr.join();
 			
 			//initialize main map
 			_map = new FlxTilemap;
 			_map.loadMap(_levelString, blocks_img, grid_size, grid_size);
 		
+		}
+		private function InitClouds():void {
+			_clouds = new FlxGroup();
+			var tempSprite:FlxSprite;
+			
+			
+			var scrollFactorX:Number = 1.3;
+			var scrollFactorY:Number = 1.2;
+			
+			for (var i:int = 0; i < 30; i++) 
+			{
+				
+				var rndX:Number = FlxU.random() * _mapWidth * 16;
+				var rndY:Number = FlxU.random() * 120 + 850;
+				var rndFactor:Number = FlxU.random() / 5;
+				var rndSpeed:Number = FlxU.random() * 1;
+				var rndKind:Number = int(FlxU.random()*3); // so that it would generate 0,1 or 2
+				
+					switch (rndKind)
+					{
+						case 0:
+							tempSprite = new FlxSprite(rndX, rndY, clouds1Img);
+							break;
+						case 1:
+							tempSprite = new FlxSprite(rndX, rndY, clouds2Img);
+							break;
+						case 2:
+							tempSprite = new FlxSprite(rndX, rndY, clouds3Img);
+							break;
+						default:
+							
+						break;
+					}
+				tempSprite.velocity.x = -5 - rndSpeed;
+				tempSprite.scrollFactor.x = scrollFactorX + rndFactor;
+				tempSprite.scrollFactor.y = scrollFactorY;
+				_clouds.add(tempSprite);
+			}
 		}
 		private function InitStuff():void {
 			
@@ -154,7 +205,14 @@ package
 			}
 			
 		}
-		
+		public function AddFrontLayer(st:PlayState):void
+		{
+			 
+			if (_hasClouds)
+			{
+				st.add(_clouds);
+			}
+		}
 		public function update():void
 		{
 			_map.update();
@@ -185,6 +243,10 @@ package
 				var tempfan:Fan = _fans.members[j] as Fan;
 				if(tempfan.visible)
 					tempfan.update();
+			}
+			if (_hasClouds)
+			{
+				_clouds.update();
 			}
 		}
 		public function collide():void

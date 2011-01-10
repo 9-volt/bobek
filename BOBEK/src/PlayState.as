@@ -32,6 +32,7 @@ package
 			add(Bob);
 			add(OneEnemy);
 			
+			map.AddFrontLayer(this);
 			//should be added last for right z-index (visibility)
 			Bob.addCandyBar( 20 );
 			
