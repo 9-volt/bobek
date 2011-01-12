@@ -7,7 +7,7 @@ package
 	{
 		
 		[Embed(source = "../media/elements/tiles.png")] private var blocks_img:Class;
-		//[Embed(source = "../media/sky_gradient.png")] private var hillsImg:Class;
+		[Embed(source = "../media/sky_gradient3.png")] private var hillsImg:Class;
 		[Embed(source = "../media/elements/clouds/cloud1.png")] private var clouds1Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud2.png")] private var clouds2Img:Class;
 		[Embed(source = "../media/elements/clouds/cloud3.png")] private var clouds3Img:Class;
@@ -31,8 +31,8 @@ package
 		private var _enemies:FlxGroup = new FlxGroup();
 		private var _hasClouds:Boolean;
 		
-		//private var _farBg:FlxSprite;
-		//private var _nearBg:FlxSprite;
+		private var _farBg:FlxSprite;
+		private var _nearBg:FlxSprite;
 		
 		private var _levelString:String;
 		private var _levelArr:Array;
@@ -127,7 +127,7 @@ package
 			_fans = new FlxGroup();
 			_spikes = new FlxGroup();			
 			_enemies = new FlxGroup();
-			//_nearBg = new FlxSprite(0, 0, hillsImg);
+			_nearBg = new FlxSprite(0, 0, hillsImg);
 		
 			var _trap : Trap;
 			var _candy :Candy;
@@ -175,7 +175,7 @@ package
 						_levelArr[i] = "0";
 						break;
 					case "15":
-						_trap = new Trap((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 + 64);
+						_trap = new Trap((i % _mapWidth) * 16, int(i / _mapWidth) * 16 + 64);
 						
 						_traps.add(_trap);
 						_levelArr[i] = "0";
@@ -235,8 +235,9 @@ package
 		
 		public function AddToState():void
 		{			
-			//_gameState.add(_nearBg);
-			//_nearBg.scrollFactor.x = 0.4;
+			_gameState.add(_nearBg);
+			_nearBg.scrollFactor.x = 0.10;
+			_nearBg.scrollFactor.y = 0.012;
 			for (var j:int = 0; j < _fans.members.length; j++) 
 			{
 				var tempfan:Fan = _fans.members[j] as Fan;

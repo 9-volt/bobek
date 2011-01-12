@@ -31,7 +31,7 @@ package
 		
 		public function Candy(x:Number, y:Number, _type:String, _energyQuatity:int = 0) 
 		{
-			super( x + 7, y );
+			super( x + 4, y );
 			counter = 0;
 			type = _type;
 			
