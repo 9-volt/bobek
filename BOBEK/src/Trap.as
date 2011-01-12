@@ -1,5 +1,6 @@
 package  
 {
+	import flash.geom.Point;
 	import flash.net.URLLoaderDataFormat;
 	import org.flixel.*;
 	
@@ -17,8 +18,8 @@ package
 		private var counter:Number;
 		
 		private var time:Number = 1.2;
-		private var fadeoutTime:Number = 1.7;
-		private var particleFadeoutTime:Number = 4;
+		private var fadeoutTime:Number = 1.5;
+		private var particleFadeoutTime:Number = 3;
 		
 		
 		public function Trap(x:Number, y:Number) 
@@ -39,27 +40,29 @@ package
 			
 			
 			emitter = new FlxEmitter(); //x and y of the emitter
-			emitter.width = width - 40;
-			emitter.x = x + 17;
-			emitter.y = y - 44;
-			emitter.setXSpeed(0, 10);
-			emitter.setYSpeed(0, 30);
+			emitter.width = width;
+			emitter.height = height;
+			emitter.x = x;
+			emitter.y = y - height + 4;
+			emitter.setXSpeed(-15, 15);
+			emitter.setYSpeed(-5, 24);
 			emitter.setRotation(0, 80);
 			emitter.gravity = 40;
 			
-			emitter.createSprites(trap_part_img, 16, 32, true, 0.8);
+			emitter.createSprites(trap_part_img, 12, 32, true, 0);
 			
 			
 			shakeEmitter = new FlxEmitter(); //x and y of the shakeEmitter
 			shakeEmitter.width = width - 20;
 			shakeEmitter.x = x + 7;
 			shakeEmitter.y = y - 20;
-			shakeEmitter.setXSpeed(0, 10);
-			shakeEmitter.setYSpeed(0, 30);
+			shakeEmitter.setXSpeed(-20, 20);
+			shakeEmitter.setYSpeed(-8, 30);
 			shakeEmitter.setRotation(0, 80);
 			shakeEmitter.gravity = 20;
+			//TODO change small particles bounding box to somtihng smaller (because of our grass)
 			
-			shakeEmitter.createSprites(trap_shake_part_img, 28, 32);
+			shakeEmitter.createSprites(trap_shake_part_img, 24, 32, true, 0.6);
 			
 		}
 		override public function hitTop(Contact:FlxObject, Velocity:Number):void

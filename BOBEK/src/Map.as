@@ -169,7 +169,7 @@ package
 						break;
 					case "14":	//Spike
 					case "29":	//Spike big
-						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16, (ch == "14" ? true : false) );
+						_spike= new Spike((i % _mapWidth) * 16 + 4, int(i / _mapWidth) * 16 - 3 - int(Math.random( ) *4), (ch == "14" ? true : false) );
 						
 						_spikes.add(_spike);
 						_levelArr[i] = "0";
